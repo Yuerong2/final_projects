@@ -47,7 +47,16 @@
 ## Datasets going to use
 
 - Songs: https://www.kaggle.com/rakannimer/billboard-lyrics [coverage: 1965-2015)]
-- News:  in progress of data wrangling  
+- News:  in progress of data wrangling   
+  -- Newspaper Source (Database)
+    - http://web.a.ebscohost.com.proxy2.library.illinois.edu/ehost/search/advanced?vid=0&sid=3c64557f-5146-433d-891a-724ed9e12b3d%40sdc-v-sessmgr01 (or can be accessed from UIUC library database catalog)
+    - Coverage: Identifies articles in regional U.S. newspapers, international newspapers, newswires and newspaper columns, as well as TV and radio news transcripts. Provides cover-to-cover full text for over 20 national (U.S.) and international newspapers, including USA Today, The Christian Science Monitor, The Washington Post, The Times (London), The Toronto Star, etc. Also contains selected full text from more than 200 regional (U.S.) newspapers, including The Boston Globe, The Chicago Tribune, The Detroit Free Press, The Miami Herald, The New York Daily News, The San Jose Mercury News, etc. In addition, full text television & radio news transcripts are provided from CBS News, FOX News, NPR, etc. 
+    - Esther's Notes:
+      - This database is great! It allows user to download searched result as a XML file. 
+      - I searched for cover stories published in New York Times, between 2001-2015. (I changed the time range a bit so that we can get three equal time window:2001-2005, 2006-2010, and 2011-2015)
+      - Got 21,055 records.
+      - We can extract title, abstract and pub date from the XML file!
+  
   -- ProQuest Historical Newspapers: The New York Times (Database)  
     - https://search.proquest.com/hnpnewyorktimes?accountid=14553 (or can be accessed from UIUC library database catalog)
     - time coverage: 1851 - 2015
