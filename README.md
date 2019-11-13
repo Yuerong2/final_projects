@@ -49,7 +49,7 @@
 - Songs: https://www.kaggle.com/rakannimer/billboard-lyrics [coverage: 1965-2015)]
 - News:  in progress of data wrangling  
   -- ProQuest Historical Newspapers: The New York Times (Database)  
-    - coverage: 1851 - 2015
+    - time coverage: 1851 - 2015
     - 843,476 news (document type limited to article and dates as 2000-2015)
     - limitation: can only download 100 record each time
     - what we can get from the downloaded data:    
