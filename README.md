@@ -49,6 +49,7 @@
 - Songs: https://www.kaggle.com/rakannimer/billboard-lyrics [coverage: 1965-2015)]
 - News:  in progress of data wrangling  
   -- ProQuest Historical Newspapers: The New York Times (Database)  
+    - https://search.proquest.com/hnpnewyorktimes?accountid=14553 (or can be found from UIUC library)
     - time coverage: 1851 - 2015
     - 843,476 news (document type limited to article and dates as 2000-2015)
     - limitation: can only download 100 record each time
