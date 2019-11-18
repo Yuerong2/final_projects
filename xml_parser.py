@@ -1,6 +1,7 @@
 # Author: Tzu-Kun Hsiao
 # This is for parsing the XML obtained from Newspaper Source.
 # If 'title' or 'abstract' is empty, the value will be 'NONE'.
+# Only words and numbers in the titles and abstracts are preserved. All the punctuations are removed.
 
 from lxml import etree as ET
 import pandas as pd
