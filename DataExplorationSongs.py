@@ -1,6 +1,5 @@
-import json
+
 import pandas as pd # type: ignore
-import datetime
 import re
 
 def remove_special_characters(text, remove_digits=False):
