@@ -35,7 +35,7 @@ print(sw)
 
 # Process song data, and store data into a dataframe (song_df).
 song_data = []
-with open('billboard_lyrics_1964-2015.csv', 'r', encoding='cp1252') as song_in:
+with open('raw_data/billboard_lyrics_1964-2015.csv', 'r', encoding='cp1252') as song_in:
     song_file = csv.reader(song_in)
     next(song_file)
     for line in song_file:
@@ -56,7 +56,7 @@ with open('billboard_lyrics_1964-2015.csv', 'r', encoding='cp1252') as song_in:
             lyric = remove_stopwords(lyric, sw)
             if len(lyric) > 0:
                 # only append the lines in which lyric data is not na
-                song_data.append([rank, song_title, artist, song_yr, lyric])
+                song_data.append([rank, song_title, artist, song_yr, str(lyric)])
 
 song_df = pd.DataFrame(song_data, columns=['Rank', 'Song', 'Artist', 'Year', 'Lyrics'])
 song_df['Year'] = song_df['Year'].astype(int)
@@ -65,7 +65,7 @@ song_df['Year'] = song_df['Year'].astype(str)
 
 
 # Process news data, and news data into a dataframe (news_df).
-news_xml = ['NewYorkTimes_CoverStory_2001-2008_2013_2015.xml', 'NewYorkTimes_CoverStory_2009-2012.xml']
+news_xml = ['raw_data/NewYorkTimes_CoverStory_2001-2008_2013_2015.xml', 'raw_data/NewYorkTimes_CoverStory_2009-2012.xml']
 news_data = []
 for news_file in news_xml:
     tree = ET.parse(news_file)
@@ -115,7 +115,8 @@ for pair in song_count_per_yr_list:
 
 print(sampled_news.groupby(['Year']).count())
 
-song_df.to_csv('/Users/iwishsomeday/Documents/PYCharm/PR590/final_projects/billboard_lyrics_2001-2015.csv')
-sampled_news.to_csv('/Users/iwishsomeday/Documents/PYCharm/PR590/final_projects/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv')
+song_df.set_index('Rank').to_csv('/Users/iwishsomeday/Documents/PYCharm/PR590/final_projects/cleaned_data/billboard_lyrics_2001-2015.csv')
+news_df.set_index('News_id').to_csv('/Users/iwishsomeday/Documents/PYCharm/PR590/final_projects/cleaned_data/NewYorkTimes_CoverStory_2001-2015.csv')
+sampled_news.set_index('News_id').to_csv('/Users/iwishsomeday/Documents/PYCharm/PR590/final_projects/cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv')
 
 
