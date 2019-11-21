@@ -107,7 +107,7 @@ with open('raw_data/billboard_lyrics_1964-2015.csv', 'r', encoding='cp1252') as 
             lyric = clean_text(lyric_dirty, remove_digits=True)
             lyric = remove_stopwords(lyric, sw)
             if len(lyric) > 0:
-                # only append the lines in which lyric data is not na
+                # only keep the lines in which lyric data is not na
                 song_data.append([rank, song_title, artist, song_yr, str(lyric)])
 
 song_df = pd.DataFrame(song_data, columns=['Rank', 'Song', 'Artist', 'Year', 'Lyrics'])
@@ -145,17 +145,15 @@ for news_file in news_xml:
 
 news_df = pd.DataFrame(news_data, columns=['News_id', 'Year', 'Title', 'Abstract'])
 news_df = news_df.replace('NONE', np.nan)
-# only append the lines in which Year, Title, and Abstract are not na
+# only keep the lines in which Year, Title, and Abstract are not na
 news_df = news_df.dropna(subset=['Year', 'Title', 'Abstract'])
 
 
 # Sample the news based on number of songs (by year)
 song_count_per_yr = song_df.groupby(['Year']).count()[['Lyrics']].reset_index()
 print(song_count_per_yr)
-#print(news_df.groupby(['Year']).count())
-
 song_count_per_yr_list = song_count_per_yr.values.tolist()
-print(song_count_per_yr_list)
+#print(song_count_per_yr_list)
 
 sampled_news = pd.DataFrame(columns=news_df.columns)
 for pair in song_count_per_yr_list:
@@ -165,6 +163,7 @@ for pair in song_count_per_yr_list:
     one_year_sample = one_year_news.sample(n=n_song, random_state=1)
     sampled_news = pd.concat([sampled_news, one_year_sample])
 
+#print(news_df.groupby(['Year']).count())
 print(sampled_news.groupby(['Year']).count())
 
 song_df.set_index('Rank').to_csv('/Users/iwishsomeday/Documents/PYCharm/PR590/final_projects/cleaned_data/billboard_lyrics_2001-2015.csv')
