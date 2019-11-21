@@ -116,7 +116,7 @@ song_df = song_df.loc[song_df.Year >= 2001]
 song_df['Year'] = song_df['Year'].astype(str)
 
 
-# Process news data, and news data into a dataframe (news_df).
+# Process news data, and store news data into a dataframe (news_df).
 news_xml = ['raw_data/NewYorkTimes_CoverStory_2001-2008_2013_2015.xml', 'raw_data/NewYorkTimes_CoverStory_2009-2012.xml']
 news_data = []
 for news_file in news_xml:
