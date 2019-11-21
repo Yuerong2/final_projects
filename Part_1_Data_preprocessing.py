@@ -102,7 +102,7 @@ with open('raw_data/billboard_lyrics_1964-2015.csv', 'r', encoding='cp1252') as 
 
         song_yr = line[3]
 
-        lyric_dirty = line[4]
+        lyric_dirty = line[4].strip()
         if lyric_dirty != 'NA':
             lyric = clean_text(lyric_dirty, remove_digits=True)
             lyric = remove_stopwords(lyric, sw)
