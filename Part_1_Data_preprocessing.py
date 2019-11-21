@@ -16,7 +16,7 @@ def clean_text(text: str, remove_digits=False):
     :return: a string
 
     >>> clean_text('a@b**c12//34 E|||D&&')
-    abc1234 ed
+    'abc1234 ed'
     >>> a = clean_text('a@b**c12//34 E|||D^^')
     >>> a == 'abc1234 ED'
     False
