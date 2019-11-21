@@ -12,7 +12,7 @@ def clean_text(text: str, remove_digits=False):
     """ Remove punctuations and lowercase; remove digits (optional)
 
     :param text: a string
-    :param remove_digits: default as False, i.e not remove digits
+    :param remove_digits: True or False, default as False
     :return: a string
 
     >>> clean_text('a@b**c12//34 E|||D&&')
