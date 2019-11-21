@@ -9,11 +9,12 @@ import csv
 
 
 def clean_text(text: str, remove_digits=False):
-    """ Remove punctuations and lowercase; remove digits (optional)
+    """ Remove punctuations and lowercase the string;
+    remove digits (optional).
 
     :param text: a string
     :param remove_digits: True or False, default as False
-    :return: a string
+    :return: a lower-cased string without punctuations (and digits if remove_digits=True)
 
     >>> clean_text('a@b**c12//34 E|||D&&')
     'abc1234 ed'
@@ -35,9 +36,43 @@ def clean_text(text: str, remove_digits=False):
 
 
 def remove_stopwords(a_string: str, list_of_stopwords: list):
+    """Remove stopwords from a string.
+
+    :param a_string: a string for removing stopwords
+    :param list_of_stopwords: a list containing all the stopwords
+    :return: a string without stopwords
+
+    >>> example_sw = ['is', 'a']
+    >>> some_string = 'There is a superman'
+    >>> remove_stopwords(some_string, example_sw)
+    'There superman'
+    >>> example_sw = ['is', 'a']
+    >>> some_string = 'There is a superman'
+    >>> rm_string = remove_stopwords(some_string, example_sw)
+    >>> rm_string == 'Theresuperman'
+    False
+    >>> example_sw = ['is', 'a']
+    >>> some_string = 'There is a superman'
+    >>> rm_string2 = remove_stopwords(some_string, example_sw)
+    >>> rm_string2 == 'There  superman'
+    False
+    >>> list_string = ['there', 'is', 'a', 'superman']
+    >>> remove_stopwords(list_string, example_sw)
+    Traceback (most recent call last):
+    ValueError: input of first parameter must be a string
+    >>> remove_stopwords(some_string, ('is', 'a'))
+    Traceback (most recent call last):
+    ValueError: input of second parameter must be a list
+    """
+
+    if isinstance(a_string, str) is False:
+        raise ValueError('input of first parameter must be a string')
+    if isinstance(list_of_stopwords, list) is False:
+        raise ValueError('input of second parameter must be a list')
+
     filtered_words = []
     for w in a_string.split():
-        if w not in list_of_stopwords:
+        if w.lower() not in list_of_stopwords:
             filtered_words.append(w)
     filtered_string = ' '.join(filtered_words)
 
