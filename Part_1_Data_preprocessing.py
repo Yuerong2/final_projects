@@ -8,7 +8,24 @@ import re
 import csv
 
 
-def clean_text(text, remove_digits=False):
+def clean_text(text: str, remove_digits=False):
+    """ Remove punctuations and lowercase; remove digits (optional)
+
+    :param text: a string
+    :param remove_digits: default as False, i.e not remove digits
+    :return: a string
+
+    >>> clean_text('a@b**c12//34 E|||D&&')
+    abc1234 ed
+    >>> a = clean_text('a@b**c12//34 E|||D^^')
+    >>> a == 'abc1234 ED'
+    False
+    >>> a == 'abc ed'
+    False
+    >>> b = clean_text('a@b**c12//34 E|||D$$', remove_digits=True)
+    >>> b == 'abc ed'
+    True
+    """
     pattern = r'[^a-zA-Z0-9\s]' if not remove_digits else r'[^a-zA-Z\s]'
     text = re.sub(pattern, '', text)
     text = text.replace('\t', ' ').replace('\n', ' ')
@@ -17,7 +34,7 @@ def clean_text(text, remove_digits=False):
     return text
 
 
-def remove_stopwords(a_string, list_of_stopwords):
+def remove_stopwords(a_string: str, list_of_stopwords: list):
     filtered_words = []
     for w in a_string.split():
         if w not in list_of_stopwords:
