@@ -78,8 +78,11 @@ def remove_stopwords(a_string: str, list_of_stopwords: list):
 
     return filtered_string
 
+
 # get stopwords from nltk
 sw = list(set(stopwords.words('english')))
+# remove punctuations in stopwords
+# (do this because punctuations in all the strings in our data will first be removed)
 sw = clean_text(' '.join(sw)).split()
 # creat a list of customized stopwords
 customized_sw = ['na', 'la', 'ooh', 'oh']
