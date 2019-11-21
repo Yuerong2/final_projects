@@ -151,7 +151,7 @@ news_df = news_df.dropna(subset=['Year', 'Title', 'Abstract'])
 
 # Sample the news based on number of songs (by year)
 song_count_per_yr = song_df.groupby(['Year']).count()[['Lyrics']].reset_index()
-print(song_count_per_yr)
+song_count_per_yr = song_count_per_yr.rename(columns={'Lyrics': 'N_songs'})
 song_count_per_yr_list = song_count_per_yr.values.tolist()
 #print(song_count_per_yr_list)
 
@@ -163,8 +163,15 @@ for pair in song_count_per_yr_list:
     one_year_sample = one_year_news.sample(n=n_song, random_state=1)
     sampled_news = pd.concat([sampled_news, one_year_sample])
 
-#print(news_df.groupby(['Year']).count())
-print(sampled_news.groupby(['Year']).count())
+# Number of songs, and number of news in pre/post sampling
+unsampled_news_count = news_df.groupby(['Year']).count()[['Title']].reset_index()
+unsampled_news_count = unsampled_news_count.rename(columns={'Title': 'N_news(raw data)'})
+
+sampled_news_count = sampled_news.groupby(['Year']).count()[['Title']].reset_index()
+sampled_news_count = sampled_news_count.rename(columns={'Title': 'N_news(sampled data)'})
+
+data_stats = song_count_per_yr.merge(sampled_news_count, how='outer').merge(unsampled_news_count, how='outer')
+print(data_stats)
 
 song_df.set_index('Rank').to_csv('/Users/iwishsomeday/Documents/PYCharm/PR590/final_projects/cleaned_data/billboard_lyrics_2001-2015.csv')
 news_df.set_index('News_id').to_csv('/Users/iwishsomeday/Documents/PYCharm/PR590/final_projects/cleaned_data/NewYorkTimes_CoverStory_2001-2015.csv')
