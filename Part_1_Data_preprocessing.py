@@ -85,7 +85,8 @@ sw = list(set(stopwords.words('english')))
 # (do this because punctuations in all the strings in our data are removed before conducting stopwords removal)
 sw = clean_text(' '.join(sw)).split()
 # creat a list of customized stopwords
-customized_sw = ['na', 'la', 'ooh', 'oh', 'ah', 'ba', 'da', 'aye']
+customized_sw = ['na', 'la', 'ooh', 'oh', 'ah', 'ba', 'da', 'aye','be',
+                 'go','get','know','s']
 # add customized stopwords to the nltk list
 sw = sw + customized_sw
 print(sw)
@@ -178,8 +179,8 @@ sampled_news_count = sampled_news_count.rename(columns={'Title': 'N_news(sampled
 data_stats = song_count_per_yr.merge(sampled_news_count, how='outer').merge(unsampled_news_count, how='outer')
 print(data_stats)
 
-song_df.set_index('Rank').to_csv('/Users/iwishsomeday/Documents/PYCharm/PR590/final_projects/cleaned_data/billboard_lyrics_2001-2015.csv')
-news_df.set_index('News_id').to_csv('/Users/iwishsomeday/Documents/PYCharm/PR590/final_projects/cleaned_data/NewYorkTimes_CoverStory_2001-2015.csv')
-sampled_news.set_index('News_id').to_csv('/Users/iwishsomeday/Documents/PYCharm/PR590/final_projects/cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv')
+song_df.set_index('Rank').to_csv('cleaned_data/billboard_lyrics_2001-2015.csv')
+news_df.set_index('News_id').to_csv('cleaned_data/NewYorkTimes_CoverStory_2001-2015.csv')
+sampled_news.set_index('News_id').to_csv('cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv')
 
 
