@@ -19,7 +19,7 @@ def sentiment_analyzer_scores(sentence):
     compScores.append(comp)
 
     #text_file.write(str(score))
-data=pd.read_csv('/Users/hu/Desktop/BPO2019fall/PR/sentiment_analysis_vaderSentiment/cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv')
+data=pd.read_csv('../cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv')
 sentSet=data['Abstract'].tolist()
 tagSet=data['Year'].tolist()
 for i in sentSet:
