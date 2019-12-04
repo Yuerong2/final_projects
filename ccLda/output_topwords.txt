@@ -1,0 +1,1320 @@
+Topic 1
+--------
+disease
+g
+special
+roman
+film
+apartment
+pace
+go
+carolina
+jail
+relief
+foreigner
+intended
+mother
+spring
+terror
+promise
+inside
+clear
+benjamin
+-Collection 0
+  u
+  article
+  new
+  united
+  american
+  york
+  include
+  topic
+  year
+  iraq
+  would
+  political
+  two
+  plan
+  one
+  company
+  administration
+  attack
+  john
+  school
+-Collection 1
+  youbaby
+  becoming
+  visit
+  mink
+  nanana
+  smokin
+  bar
+  airyou
+  zono
+  coulda
+  cuddle
+  happens
+  relate
+  sunny
+  gat
+  birdman
+  inna
+  force
+  necklace
+  mourn
+
+
+Topic 2
+--------
+sean
+earned
+ended
+guide
+mark
+mold
+anyone
+dealin
+outrun
+sailor
+runway
+act
+moneyif
+ceo
+spirit
+hazel
+hollow
+jar
+pastor
+soy
+-Collection 0
+  atlantic
+  approved
+  racial
+  desire
+  conversation
+  getting
+  survey
+  announces
+  acknowledged
+  opportunity
+  mile
+  quality
+  immediately
+  declaration
+  operate
+  followed
+  implemented
+  schwarzenegger
+  chance
+  arkansas
+-Collection 1
+  knew
+  bigger
+  shop
+  grip
+  frontin
+  direction
+  nana
+  sean
+  grande
+  tag
+  blunt
+  indeed
+  tasty
+  pourin
+  ago
+  gate
+  chance
+  inn
+  cock
+  swagger
+
+
+Topic 3
+--------
+capture
+crumbling
+lotta
+dan
+greatest
+wan
+sorted
+lava
+whoah
+wade
+fitness
+tighter
+truly
+boy
+boycant
+reap
+illuminate
+lumpsshawty
+beforefore
+esteem
+-Collection 0
+  navy
+  village
+  advice
+  struck
+  reservation
+  cable
+  academic
+  liberty
+  spent
+  wage
+  reich
+  depot
+  graduated
+  everything
+  ronald
+  mohamed
+  setback
+  homeless
+  counted
+  recommended
+-Collection 1
+  roar
+  windmill
+  headlight
+  hurtin
+  shootin
+  yeahcause
+  fish
+  sour
+  fold
+  perm
+  woke
+  lololove
+  friendbut
+  wanta
+  boyi
+  movement
+  fifteen
+  eve
+  holleration
+  cryin
+
+
+Topic 4
+--------
+would
+dollar
+upside
+pitch
+carrying
+risk
+subway
+youin
+file
+state
+mayhem
+blastedi
+highly
+carved
+sync
+swingin
+tdubl
+poet
+loso
+heaveni
+-Collection 0
+  fight
+  nasa
+  often
+  medicine
+  complex
+  range
+  accountability
+  un
+  library
+  named
+  alabama
+  swift
+  gm
+  facebook
+  p
+  severe
+  libby
+  explores
+  blasio
+  peace
+-Collection 1
+  champagne
+  tup
+  watched
+  status
+  milk
+  thirty
+  vacation
+  attitude
+  coat
+  salt
+  beatin
+  shizzle
+  cadillacs
+  honest
+  shell
+  andale
+  solve
+  planning
+  watch
+  looked
+
+
+Topic 5
+--------
+even
+met
+problem
+meaning
+driving
+pair
+cash
+album
+stage
+held
+story
+paid
+drinking
+kept
+battlefield
+sure
+marry
+country
+map
+radio
+-Collection 0
+  focus
+  industry
+  minister
+  economy
+  number
+  action
+  television
+  supreme
+  army
+  officer
+  make
+  overview
+  description
+  expert
+  challenge
+  employee
+  majority
+  arrest
+  water
+  led
+-Collection 1
+  give
+  turn
+  hand
+  still
+  young
+  low
+  til
+  waiting
+  swear
+  ridin
+  outta
+  kinda
+  might
+  five
+  secret
+  king
+  wear
+  fast
+  changed
+  peace
+
+
+Topic 6
+--------
+jaw
+tearing
+nation
+honesty
+polo
+local
+caution
+cousin
+writing
+complete
+boat
+jamaican
+keller
+incomplete
+david
+biti
+oohi
+meal
+diei
+thistake
+-Collection 0
+  commerce
+  california
+  lender
+  fda
+  promote
+  ladens
+  asking
+  stress
+  pa
+  clarkes
+  autism
+  mets
+  donate
+  close
+  revealed
+  gunman
+  enter
+  directed
+  negotiated
+  dr
+-Collection 1
+  advice
+  buzz
+  pound
+  los
+  sell
+  belt
+  jealous
+  rhythm
+  inna
+  tail
+  mighty
+  uoeno
+  tight
+  grave
+  approach
+  slang
+  bedpost
+  symphony
+  focus
+  icy
+
+
+Topic 7
+--------
+good
+pull
+three
+talk
+top
+beautiful
+wall
+million
+alone
+hitta
+soon
+finger
+plan
+shoe
+blame
+clear
+locked
+rich
+great
+finally
+-Collection 0
+  texas
+  keep
+  fighting
+  idea
+  osama
+  raising
+  manhattan
+  commander
+  bond
+  rumsfeld
+  lower
+  serious
+  minority
+  released
+  christian
+  winning
+  commissioner
+  detainee
+  parliament
+  version
+-Collection 1
+  aint
+  think
+  say
+  gotta
+  night
+  hear
+  wish
+  whoa
+  game
+  leave
+  name
+  lose
+  eh
+  red
+  god
+  lonely
+  bit
+  believe
+  home
+  understand
+
+
+Topic 8
+--------
+take
+hit
+better
+never
+around
+without
+light
+let
+night
+drop
+done
+place
+enough
+made
+people
+still
+want
+club
+mean
+friend
+-Collection 0
+  republican
+  w
+  obama
+  party
+  detail
+  including
+  country
+  leader
+  health
+  case
+  security
+  law
+  public
+  program
+  policy
+  issue
+  terrorist
+  service
+  senator
+  view
+-Collection 1
+  got
+  girl
+  love
+  cant
+  cause
+  gonna
+  ya
+  back
+  put
+  could
+  heart
+  away
+  bitch
+  mind
+  good
+  baby
+  eye
+  tonight
+  everything
+  gon
+
+
+Topic 9
+--------
+learnttake
+rider
+blew
+february
+shatter
+web
+carefully
+orange
+cris
+lifeyo
+pokin
+loss
+dentist
+gozar
+margarita
+ttaen
+deliver
+sole
+glove
+soccer
+-Collection 0
+  adviser
+  great
+  baby
+  nuclear
+  positive
+  older
+  replaced
+  hampshire
+  congressman
+  permit
+  insider
+  boat
+  content
+  magazine
+  gather
+  announce
+  exposed
+  torture
+  spot
+  polanski
+-Collection 1
+  cum
+  law
+  applause
+  va
+  itcause
+  sweeter
+  wrecking
+  attitude
+  split
+  stopped
+  drifting
+  usually
+  wing
+  needin
+  princess
+  jag
+  stunting
+  half
+  tower
+  instrumental
+
+
+Topic 10
+--------
+crowd
+robbed
+bleacher
+explore
+gspot
+denied
+settle
+brightest
+mark
+juliet
+puff
+notch
+hella
+prize
+roger
+dior
+route
+dose
+ohh
+downnobody
+-Collection 0
+  castro
+  louis
+  deadly
+  negotiate
+  regard
+  failing
+  achieve
+  stricter
+  vietnam
+  core
+  tour
+  instance
+  bypass
+  freeze
+  ahmed
+  warner
+  divorce
+  participated
+  respect
+  developing
+-Collection 1
+  kissin
+  woop
+  checking
+  keepin
+  exactly
+  bus
+  without
+  tore
+  leanin
+  yelling
+  lit
+  againoh
+  itwere
+  pad
+  gushi
+  replace
+  tailgate
+  minaj
+  loveyour
+  wildest
+
+
+Topic 11
+--------
+release
+singer
+wild
+buddy
+suite
+language
+police
+presence
+parade
+lupe
+prechorus
+forbes
+spine
+morocco
+chocha
+memy
+rob
+stacked
+hehe
+pat
+-Collection 0
+  bad
+  attempt
+  campaigning
+  physician
+  motivated
+  casualty
+  contact
+  extreme
+  convicted
+  shiite
+  sudan
+  pattern
+  sharply
+  added
+  arsenal
+  expansion
+  goldman
+  beach
+  costing
+  entrance
+-Collection 1
+  trunk
+  anytime
+  joint
+  fairytale
+  paralyzed
+  lalalalala
+  blue
+  twin
+  lee
+  salsa
+  loyal
+  fifteen
+  rubber
+  nineteen
+  yeek
+  freakin
+  killin
+  natural
+  happiness
+  joy
+
+
+Topic 12
+--------
+see
+said
+well
+home
+ever
+run
+body
+move
+rock
+getting
+long
+show
+two
+day
+yes
+fire
+really
+trying
+much
+inside
+-Collection 0
+  immigration
+  strike
+  couple
+  exchange
+  powell
+  alliance
+  profit
+  pakistani
+  revenue
+  income
+  popularity
+  grand
+  play
+  drone
+  destroyed
+  single
+  anthony
+  cleric
+  alito
+  hedge
+-Collection 1
+  know
+  go
+  yeah
+  want
+  right
+  make
+  ill
+  need
+  feel
+  thing
+  tell
+  keep
+  time
+  boy
+  get
+  nigga
+  u
+  life
+  em
+  ive
+
+
+Topic 13
+--------
+depend
+soft
+broke
+preacher
+slum
+invitation
+maze
+lethal
+yeahso
+background
+perfectly
+solid
+shiti
+nowif
+crydont
+gleamin
+motto
+novel
+laurent
+babei
+-Collection 0
+  veteran
+  biographical
+  try
+  resource
+  resulted
+  lead
+  banking
+  canadian
+  aside
+  homeless
+  affair
+  import
+  headed
+  classified
+  airport
+  impose
+  contract
+  congo
+  chase
+  uprising
+-Collection 1
+  whistle
+  shinin
+  sang
+  diddy
+  charm
+  bub
+  dre
+  heal
+  popped
+  eye
+  southern
+  machine
+  payin
+  totally
+  babygirl
+  chea
+  hype
+  gang
+  phase
+  gallardo
+
+
+Topic 14
+--------
+make
+say
+world
+time
+bad
+back
+life
+look
+girl
+floor
+beat
+dream
+call
+head
+slow
+change
+wrong
+could
+yall
+cause
+-Collection 0
+  intelligence
+  effect
+  north
+  weapon
+  food
+  second
+  take
+  held
+  immigrant
+  others
+  aid
+  reform
+  korea
+  investment
+  suspect
+  show
+  come
+  large
+  process
+  goal
+-Collection 1
+  im
+  like
+  get
+  baby
+  let
+  wanna
+  one
+  way
+  love
+  come
+  see
+  take
+  never
+  hey
+  man
+  thats
+  gone
+  even
+  find
+  something
+
+
+Topic 15
+--------
+eating
+chi
+fine
+die
+haunting
+landing
+difficult
+ohif
+thoia
+oven
+numb
+awkward
+poise
+homeless
+indiana
+datake
+smiled
+girlif
+jayz
+camel
+-Collection 0
+  difficult
+  join
+  lake
+  gasoline
+  admission
+  went
+  islam
+  ballot
+  india
+  allawi
+  defeated
+  prepare
+  anthrax
+  occupation
+  isil
+  elderly
+  meet
+  alsadr
+  easily
+  stated
+-Collection 1
+  tipsy
+  freak
+  sharp
+  issue
+  talked
+  michael
+  ohoh
+  chevy
+  chair
+  sofa
+  ball
+  dizzy
+  glock
+  divide
+  career
+  press
+  food
+  frozen
+  noche
+  shooting
+
+
+Topic 16
+--------
+appealing
+lickin
+bang
+sneakin
+youso
+delusional
+seei
+animal
+swung
+sso
+volcano
+shufflin
+hittasmy
+salary
+crushed
+communicate
+cooky
+floating
+inescapable
+sock
+-Collection 0
+  reelection
+  corporate
+  veteran
+  hear
+  theory
+  boston
+  neighborhood
+  championship
+  lawmaker
+  website
+  prepared
+  proved
+  retired
+  loophole
+  hired
+  gathering
+  istanbul
+  unclear
+  financed
+  friendly
+-Collection 1
+  oil
+  letter
+  sipping
+  slam
+  rejoice
+  butterfly
+  sore
+  witness
+  por
+  smellin
+  spade
+  jerk
+  jason
+  fairy
+  heartim
+  fikir
+  valet
+  spillin
+  bowl
+  singer
+
+
+Topic 17
+--------
+r
+november
+finding
+damage
+french
+talk
+important
+different
+rally
+mass
+william
+bomb
+inspector
+standard
+appear
+message
+hotel
+factory
+rare
+began
+-Collection 0
+  state
+  report
+  discus
+  president
+  government
+  city
+  bush
+  effort
+  federal
+  official
+  addressed
+  said
+  george
+  campaign
+  military
+  national
+  many
+  former
+  comment
+  war
+-Collection 1
+  forward
+  blouse
+  awayoh
+  grain
+  dreamed
+  youyoure
+  dixie
+  yeahthe
+  clap
+  knowthat
+  findin
+  force
+  outi
+  ooooh
+  tonighthey
+  ignition
+  tonightcan
+  honeysuckle
+  mineoh
+  unfaithful
+
+
+Topic 18
+--------
+kissing
+freeze
+creek
+tickle
+goif
+revenge
+believe
+dawning
+capable
+impression
+greatest
+convict
+crysta
+sirmy
+thugso
+nothrow
+starstake
+ham
+addition
+cardiac
+-Collection 0
+  mosque
+  requiring
+  diplomatic
+  attempting
+  method
+  door
+  provide
+  thats
+  plane
+  motion
+  located
+  variety
+  mystery
+  lindsay
+  accusation
+  tate
+  tom
+  indian
+  yemeni
+  capitol
+-Collection 1
+  plus
+  weight
+  puttin
+  showin
+  floatin
+  wearing
+  weekend
+  chose
+  everyones
+  rag
+  papa
+  fallin
+  midwest
+  forgiveness
+  whether
+  flock
+  swore
+  shityou
+  wrote
+  gain
+
+
+Topic 19
+--------
+hurricane
+describe
+brighter
+driver
+theme
+peak
+bozo
+hair
+wearin
+grimey
+tossin
+entertainer
+yougot
+woahahah
+droppin
+jugar
+prepare
+radioactive
+bridge
+cooking
+-Collection 0
+  score
+  gas
+  liberal
+  execution
+  donation
+  gave
+  accepted
+  make
+  worth
+  hacker
+  secure
+  suit
+  tribal
+  eliot
+  pittsburgh
+  achievement
+  tunnel
+  traveling
+  square
+  bar
+-Collection 1
+  spark
+  telephone
+  ooooh
+  kingdom
+  chu
+  vuitton
+  raw
+  keisha
+  doe
+  street
+  wowomp
+  badoomboom
+  didits
+  missionary
+  pig
+  butterfly
+  choke
+  happiness
+  choir
+  recall
+
+
+Topic 20
+--------
+rat
+hometown
+collecting
+tit
+fight
+nononono
+healthy
+wooooooh
+catastrophe
+stall
+bath
+better
+prey
+widebody
+buckle
+copped
+aroundpretty
+alivelately
+daydream
+issay
+-Collection 0
+  science
+  confidential
+  able
+  incidence
+  room
+  older
+  nuri
+  merger
+  prominent
+  label
+  teenage
+  reality
+  organ
+  detect
+  pervez
+  allen
+  collector
+  opposite
+  farm
+  admitted
+-Collection 1
+  noise
+  meall
+  blanket
+  duff
+  tide
+  ese
+  dawg
+  betteryou
+  love
+  ringin
+  clit
+  bodyi
+  patient
+  threw
+  lala
+  clown
+  laughin
+  itand
+  juice
+  endlessly
+
+
