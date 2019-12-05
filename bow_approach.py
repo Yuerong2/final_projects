@@ -90,6 +90,29 @@ def get_top_words(tfidf_dict: dict, n_words=10):
     return df_out
 
 
+def jaccard_sim(news_data_dict: dict, song_data_dict: dict):
+
+    jaccard_dict = defaultdict(list)
+
+    for news_yr, news_txt in news_data_dict.items():
+        news_txt_flat = []
+        for nt in news_txt:
+            news_txt_flat += nt
+        news_txt_flat = set(news_txt_flat)
+        if news_yr <= 2011:
+            song_txt_flat = set()
+            for i in range(5):
+                song_yr = news_yr+i
+                for st in song_data_dict[song_yr]:
+                    for stw in st:
+                        song_txt_flat.add(stw)
+                shared_words = news_txt_flat.intersection(song_txt_flat)
+                jaccard = len(shared_words) / (len(song_txt_flat) + len(news_txt_flat) + len(shared_words))
+                jaccard_dict[news_yr].append(jaccard)
+
+    return jaccard_dict
+
+
 def l2_norm(word_list: list):
     l2_dict = {}
     word_freq = Counter(word_list)
@@ -149,11 +172,23 @@ for v in all_top_df.values.tolist():
     # print the top N terms having the highest tf-idf in songs and news
     print('{:4} {:<20} {:.2f} {:4} {:<20} {:.2f}'.format(v[0], v[1], v[2], v[3], v[4], v[5]))
 
-sim_11yr = cosine_sim(news_data, song_data)
-for news_yr, cos_val in sim_11yr.items():
+print('\n')
+print('Jaccard similarity:')
+jaccard_11yr = jaccard_sim(news_data, song_data)
+for news_yr, jac_val in jaccard_11yr.items():
+    # print jaccard similarity between news and songs, using a five-year sliding window
+    print(news_yr, jac_val)
+
+print('\n')
+print('Cosine similarity:')
+cosine_11yr = cosine_sim(news_data, song_data)
+for news_yr, cos_val in cosine_11yr.items():
+    # print cosine similarity between news and songs, using a five-year sliding window
     print(news_yr, cos_val)
 
-print(time()-start_time)
+
+print('\n')
+print('run time:', time()-start_time)
 
 
 
