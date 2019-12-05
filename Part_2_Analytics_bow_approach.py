@@ -176,7 +176,7 @@ for year in range(15):
     top_w_news = set(df_1yr_news.N_term.tolist())
     for yr in range(15-year):
         song_year = news_year + yr
-        if song_year >= news_year:
+        if song_year >= news_year and song_year - news_year < 5:
             df_1yr_song = all_top_df.loc[all_top_df.S_yr == song_year]
             top_w_song = set(df_1yr_song.S_term.tolist())
             in_both = list(top_w_news.intersection(top_w_song))
