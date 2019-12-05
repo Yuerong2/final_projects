@@ -12,12 +12,12 @@ start_time = time()
 
 path2song = r'cleaned_data/billboard_lyrics_2001-2015.csv'
 path2news = r'cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv'
-song = pd.read_csv('cleaned_data/billboard_lyrics_2001-2015.csv')
-news = pd.read_csv('cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv')
-print(song.shape)
-print(song.columns)
-print(news.shape)
-print(news.columns)
+# song = pd.read_csv('cleaned_data/billboard_lyrics_2001-2015.csv')
+# news = pd.read_csv('cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv')
+# print(song.shape)
+# print(song.columns)
+# print(news.shape)
+# print(news.columns)
 
 
 def read_data(path2file: str, yr_loc: int, ti_loc: int, txt_loc: int):
@@ -153,28 +153,46 @@ def cosine_sim(news_data_dict: dict, song_data_dict: dict):
 
     return cosine_sim11
 
-
+n_top_words = 100
 song_data = read_data(path2song, yr_loc=3, ti_loc=1, txt_loc=4)
 song_tfidf = cal_tf_idf(song_data)
-song_top = get_top_words(song_tfidf, n_words=5)
+song_top = get_top_words(song_tfidf, n_words=n_top_words)
 
 news_data = read_data(path2news, yr_loc=1, ti_loc=2, txt_loc=3)
 news_tfidf = cal_tf_idf(news_data)
-news_top = get_top_words(news_tfidf, n_words=5)
+news_top = get_top_words(news_tfidf, n_words=n_top_words)
 
-all_top_df = pd.concat([song_top, news_top], axis=1)
-for v in all_top_df.values.tolist():
-    # print the top N terms having the highest tf-idf in songs and news
-    print('{:4} {:<20} {:.2f} {:4} {:<20} {:.2f}'.format(v[0], v[1], v[2], v[3], v[4], v[5]))
+all_top_df = pd.concat([news_top, song_top], axis=1)
+all_top_df.columns = ['Year', 'N_term', 'N_tfidf', 'S_yr', 'S_term', 'S_tfidf']
+all_top_df = all_top_df[['Year', 'N_term', 'N_tfidf', 'S_term', 'S_tfidf']]
+all_top_df.set_index('Year').to_csv('TTFIDF_top_terms.csv')
+
+shared = [['Year', 'N_in_both', 'words_in_both']]
+for year in range(15):
+    year = 2001 + year
+    df_1yr = all_top_df.loc[all_top_df.Year == year]
+    top_w_news = set(df_1yr.N_term.tolist())
+    top_w_song = set(df_1yr.S_term.tolist())
+    in_both = list(top_w_news.intersection(top_w_song))
+    n_shared = len(in_both)
+    if n_shared > 0:
+        shared.append([year, n_shared, ' '.join(in_both)])
+    else:
+        shared.append([year, 0, '-'])
+
+print('Number of high TF-IDF words found in both corpus: (among', n_top_words, 'words with highest TD-IDF)')
+for each in shared:
+    print('{:4}  {:<9}  {:<}'.format(each[0], each[1], each[2]))
+
 
 print('\n')
 print('Jaccard similarity:')
 print('{:7} {:8} {:8} {:8} {:8} {:8}'.format('News_YR', 'sim2YR+0', 'sim2YR+1', 'sim2YR+2', 'sim2YR+3', 'sim2YR+4'))
 # calculate jaccard similarity between news and songs, using a five-year sliding window
 jaccard_11yr = jaccard_sim(news_data, song_data)
-for news_yr, jac_vals in jaccard_11yr.items():
+for news_year, jac_vals in jaccard_11yr.items():
     print(
-        '{:<7} {:<8} {:<8} {:<8} {:<8} {:<8}'.format(news_yr,
+        '{:<7} {:<8} {:<8} {:<8} {:<8} {:<8}'.format(news_year,
                                                      jac_vals[0], jac_vals[1], jac_vals[2], jac_vals[3], jac_vals[4]))
     # Example:
     # If news_yr == 2001,
@@ -204,9 +222,9 @@ print('\n')
 print('Cosine similarity:')
 print('{:7} {:8} {:8} {:8} {:8} {:8}'.format('News_YR', 'sim2YR+0', 'sim2YR+1', 'sim2YR+2', 'sim2YR+3', 'sim2YR+4'))
 cosine_11yr = cosine_sim(news_data, song_data)
-for news_yr, cos_vals in cosine_11yr.items():
+for news_year, cos_vals in cosine_11yr.items():
     print(
-        '{:<7} {:<8} {:<8} {:<8} {:<8} {:<8}'.format(news_yr,
+        '{:<7} {:<8} {:<8} {:<8} {:<8} {:<8}'.format(news_year,
                                                      cos_vals[0], cos_vals[1], cos_vals[2], cos_vals[3], cos_vals[4]))
 
     # Example:
