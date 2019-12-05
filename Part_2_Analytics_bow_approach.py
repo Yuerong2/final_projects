@@ -145,8 +145,8 @@ def cosine_sim(news_data_dict: dict, song_data_dict: dict):
                     else:
                         song_array.append(0)
 
-                norm_news = norm(news_array)
-                norm_song = norm(song_array)
+                norm_news = norm(np.asarray(news_array))
+                norm_song = norm(np.asarray(song_array))
 
                 sim = np.dot(news_array, song_array) / (norm_news * norm_song)
                 sim = round(sim, 3)
