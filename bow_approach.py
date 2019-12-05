@@ -6,7 +6,7 @@ from numpy.linalg import norm
 import multiprocessing as mp
 import pandas as pd
 import numpy as np
-
+from matplotlib import pyplot as plt
 
 start_time = time()
 
@@ -22,7 +22,6 @@ print(news.columns)
 
 def read_data(path2file: str, yr_loc: int, ti_loc: int, txt_loc: int):
     lemmatizer = WordNetLemmatizer()
-
     data_per_yr = defaultdict(list)
     with open(path2file, 'r') as fin:
         lines = fin.readlines()[1:]
@@ -108,20 +107,10 @@ def jaccard_sim(news_data_dict: dict, song_data_dict: dict):
                         song_txt_flat.add(stw)
                 shared_words = news_txt_flat.intersection(song_txt_flat)
                 jaccard = len(shared_words) / (len(song_txt_flat) + len(news_txt_flat) + len(shared_words))
+                jaccard = round(jaccard, 3)
                 jaccard_dict[news_yr].append(jaccard)
 
     return jaccard_dict
-
-
-def l2_norm(word_list: list):
-    l2_dict = {}
-    word_freq = Counter(word_list)
-    word_freq_val = np.asarray(list(word_freq.values()))
-    l2 = norm(word_freq_val)
-    for k, v in word_freq.items():
-        l2_dict[k] = v / l2
-
-    return l2_dict
 
 
 def cosine_sim(news_data_dict: dict, song_data_dict: dict):
@@ -132,7 +121,7 @@ def cosine_sim(news_data_dict: dict, song_data_dict: dict):
         news_txt_flat = []
         for nt in news_txt:
             news_txt_flat += nt
-        news_tf_l2 = l2_norm(news_txt_flat)
+        news_tf = Counter(news_txt_flat)
 
         if news_yr <= 2011:
             song_txt_flat = []
@@ -140,20 +129,26 @@ def cosine_sim(news_data_dict: dict, song_data_dict: dict):
                 song_yr = news_yr+i
                 for st in song_data_dict[song_yr]:
                     song_txt_flat += st
-                song_tf_l2 = l2_norm(song_txt_flat)
+                song_tf = Counter(song_txt_flat)
 
-                cosine_prep = {}
                 all_words = list(set(song_txt_flat + news_txt_flat))
+                news_array = []
+                song_array = []
                 for aw in all_words:
-                    cosine_prep[aw] = [0, 0]
-                    if aw in song_tf_l2.keys():
-                        cosine_prep[aw][0] = song_tf_l2[aw]
-                    if aw in news_tf_l2.keys():
-                        cosine_prep[aw][1] = news_tf_l2[aw]
-                consine = {}
-                for aw, l2_score in cosine_prep.items():
-                    consine[aw] = l2_score[0] * l2_score[1]
-                sim = sum(consine.values())
+                    if aw in news_tf.keys():
+                        news_array.append(news_tf[aw])
+                    else:
+                        news_array.append(0)
+                    if aw in song_tf.keys():
+                        song_array.append(song_tf[aw])
+                    else:
+                        song_array.append(0)
+
+                norm_news = norm(news_array)
+                norm_song = norm(song_array)
+
+                sim = np.dot(news_array, song_array) / (norm_news * norm_song)
+                sim = round(sim, 3)
                 cosine_sim11[news_yr].append(sim)
 
     return cosine_sim11
@@ -179,6 +174,27 @@ for news_yr, jac_val in jaccard_11yr.items():
     # print jaccard similarity between news and songs, using a five-year sliding window
     print(news_yr, jac_val)
 
+# make fig
+t = ['news_yr', 'news_yr + 1', 'news_yr + 2', 'news_yr + 3', 'news_yr + 4']
+y_labels = list(jaccard_11yr.keys())
+colormap = plt.cm.Greens
+color = [colormap(i) for i in np.linspace(0, 1, 12)]
+fig, ax1 = plt.subplots(figsize=(12, 7))
+ax1.set_xlabel('year progression', fontsize=15)
+ax1.set_ylabel('jaccard similarity', color='k', fontsize=13)
+color_count = 0
+for ylab, cos_values in jaccard_11yr.items():
+    color_count += 1
+    line = cos_values
+    ax1.plot(t, line, color=color[color_count], label=ylab)
+ax1.tick_params(axis='y', labelcolor='k')
+
+fig.tight_layout()
+plt.legend(loc='upper right', prop={'size': 15})
+plt.title('Jaccard Similarity; 5-year sliding window', fontsize=20)
+plt.savefig('Graphs/cosine_similarity.png', dpi=600)
+plt.show()
+
 print('\n')
 print('Cosine similarity:')
 cosine_11yr = cosine_sim(news_data, song_data)
@@ -186,6 +202,26 @@ for news_yr, cos_val in cosine_11yr.items():
     # print cosine similarity between news and songs, using a five-year sliding window
     print(news_yr, cos_val)
 
+# make fig
+t = ['news_yr', 'news_yr + 1', 'news_yr + 2', 'news_yr + 3', 'news_yr + 4']
+y_labels = list(cosine_11yr.keys())
+colormap = plt.cm.Reds
+color = [colormap(i) for i in np.linspace(0, 1, 12)]
+fig, ax1 = plt.subplots(figsize=(12, 7))
+ax1.set_xlabel('year progression', fontsize=15)
+ax1.set_ylabel('cosine similarity', color='k', fontsize=13)
+color_count = 0
+for ylab, cos_values in cosine_11yr.items():
+    color_count += 1
+    line = cos_values
+    ax1.plot(t, line, color=color[color_count], label=ylab)
+ax1.tick_params(axis='y', labelcolor='k')
+
+fig.tight_layout()
+plt.legend(loc='upper right', prop={'size': 15})
+plt.title('Cosine Similarity; 5-year sliding window', fontsize=20)
+plt.savefig('Graphs/cosine_similarity.png', dpi=600)
+plt.show()
 
 print('\n')
 print('run time:', time()-start_time)
