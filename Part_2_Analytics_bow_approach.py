@@ -176,15 +176,16 @@ for year in range(15):
     top_w_news = set(df_1yr_news.N_term.tolist())
     for yr in range(15-year):
         song_year = news_year + yr
-        df_1yr_song = all_top_df.loc[all_top_df.S_yr == song_year]
-        top_w_song = set(df_1yr_song.S_term.tolist())
-        in_both = list(top_w_news.intersection(top_w_song))
-        n_shared = len(in_both)
-        yr_pair = str(news_year) + '/' + str(song_year)
-        if n_shared > 0:
-            shared.append([yr_pair, n_shared, '|'.join(in_both)])
-        else:
-            shared.append([yr_pair, 0, '-'])
+        if song_year >= news_year:
+            df_1yr_song = all_top_df.loc[all_top_df.S_yr == song_year]
+            top_w_song = set(df_1yr_song.S_term.tolist())
+            in_both = list(top_w_news.intersection(top_w_song))
+            n_shared = len(in_both)
+            yr_pair = str(news_year) + '/' + str(song_year)
+            if n_shared > 0:
+                shared.append([yr_pair, n_shared, '|'.join(in_both)])
+            else:
+                shared.append([yr_pair, 0, '-'])
 
 print('Number of high TF-IDF words found in both corpus: (among', n_top_words, 'words with highest TD-IDF)')
 for each in shared:
