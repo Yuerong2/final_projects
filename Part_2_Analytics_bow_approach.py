@@ -173,12 +173,12 @@ shared = [['Window_ID', 'NewsYR/SongYR', 'N_in_both', 'words_in_both']]
 window_count = 0
 for year in range(15):
     news_year = 2001 + year
+    window_count += 1
     df_1yr_news = all_top_df.loc[all_top_df.N_yr == news_year]
     top_w_news = set(df_1yr_news.N_term.tolist())
     for yr in range(15-year):
         song_year = news_year + yr
         if song_year >= news_year and song_year - news_year < 5:
-            window_count += 1
             df_1yr_song = all_top_df.loc[all_top_df.S_yr == song_year]
             top_w_song = set(df_1yr_song.S_term.tolist())
             in_both = list(top_w_news.intersection(top_w_song))
