@@ -47,11 +47,12 @@ def cal_tf_idf(data: dict):
     tf_idf_dict = defaultdict(list)
     c = 0
     for yr, docs in data.items():
-        unique_words_per_doc = []
+        unique_words_docs_sum = []
         for doc in docs:
-            unique_words_per_doc = list(set(doc))
+            unique_words_in_one = list(set(doc))
+            unique_words_docs_sum += unique_words_in_one
 
-        df_dict = Counter(unique_words_per_doc)
+        df_dict = Counter(unique_words_docs_sum)
 
         n_doc = len(docs)
 
