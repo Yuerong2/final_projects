@@ -107,7 +107,7 @@ def jaccard_sim(news_data_dict: dict, song_data_dict: dict):
                     for stw in st:
                         song_txt_flat.add(stw)
                 shared_words = news_txt_flat.intersection(song_txt_flat)
-                jaccard = len(shared_words) / (len(song_txt_flat) + len(news_txt_flat) + len(shared_words))
+                jaccard = len(shared_words) / (len(song_txt_flat) + len(news_txt_flat) - len(shared_words))
                 jaccard = round(jaccard, 3)
                 jaccard_dict[news_yr].append(jaccard)
 
@@ -145,8 +145,8 @@ def cosine_sim(news_data_dict: dict, song_data_dict: dict):
                     else:
                         song_array.append(0)
 
-                norm_news = norm(news_array)
-                norm_song = norm(song_array)
+                norm_news = norm(np.asarray(news_array))
+                norm_song = norm(np.asarray(song_array))
 
                 sim = np.dot(news_array, song_array) / (norm_news * norm_song)
                 sim = round(sim, 3)
