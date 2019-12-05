@@ -180,7 +180,7 @@ for year in range(15):
         top_w_song = set(df_1yr_song.S_term.tolist())
         in_both = list(top_w_news.intersection(top_w_song))
         n_shared = len(in_both)
-        yr_pair = str(news_year) + ' / ' + str(song_year)
+        yr_pair = str(news_year) + '/' + str(song_year)
         if n_shared > 0:
             shared.append([yr_pair, n_shared, '|'.join(in_both)])
         else:
@@ -191,7 +191,6 @@ for each in shared:
     print('{:<13}  {:<9}  {:<}'.format(each[0], each[1], each[2]))
     with open('TFIDF_found_in_both.csv', 'a') as fout:
         fout.write(each[0]+','+str(each[1])+','+each[2]+'\n')
-
 
 print('\n')
 print('Jaccard similarity:')
