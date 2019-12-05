@@ -169,7 +169,8 @@ all_top_df.columns = ['N_yr', 'N_term', 'N_tfidf', 'S_yr', 'S_term', 'S_tfidf']
 all_top_out = all_top_df[['N_yr', 'N_term', 'N_tfidf', 'S_term', 'S_tfidf']].rename(columns={'N_yr': 'Year'})
 all_top_out.set_index('Year').to_csv('TFIDF_top_terms.csv')
 
-shared = [['NewsYR/SongYR', 'N_in_both', 'words_in_both']]
+shared = [['Window_ID', 'NewsYR/SongYR', 'N_in_both', 'words_in_both']]
+window_count = 0
 for year in range(15):
     news_year = 2001 + year
     df_1yr_news = all_top_df.loc[all_top_df.N_yr == news_year]
@@ -177,21 +178,22 @@ for year in range(15):
     for yr in range(15-year):
         song_year = news_year + yr
         if song_year >= news_year and song_year - news_year < 5:
+            window_count += 1
             df_1yr_song = all_top_df.loc[all_top_df.S_yr == song_year]
             top_w_song = set(df_1yr_song.S_term.tolist())
             in_both = list(top_w_news.intersection(top_w_song))
             n_shared = len(in_both)
             yr_pair = str(news_year) + '/' + str(song_year)
             if n_shared > 0:
-                shared.append([yr_pair, n_shared, '|'.join(in_both)])
+                shared.append([str(window_count), yr_pair, n_shared, '|'.join(in_both)])
             else:
-                shared.append([yr_pair, 0, '-'])
+                shared.append([str(window_count), yr_pair, 0, '-'])
 
 print('Number of high TF-IDF words found in both corpus: (among', n_top_words, 'words with highest TD-IDF)')
 for each in shared:
-    print('{:<13}  {:<9}  {:<}'.format(each[0], each[1], each[2]))
+    print('{:<9}  {:<13}  {:<9}  {:<}'.format(each[0], each[1], each[2], each[3]))
     with open('TFIDF_found_in_both.csv', 'a') as fout:
-        fout.write(each[0]+','+str(each[1])+','+each[2]+'\n')
+        fout.write(each[0]+','+each[1]+','+str(each[2])+','+each[3]+'\n')
 
 print('\n')
 print('Jaccard similarity:')
