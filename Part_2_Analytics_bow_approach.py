@@ -107,7 +107,7 @@ def jaccard_sim(news_data_dict: dict, song_data_dict: dict):
                     for stw in st:
                         song_txt_flat.add(stw)
                 shared_words = news_txt_flat.intersection(song_txt_flat)
-                jaccard = len(shared_words) / (len(song_txt_flat) + len(news_txt_flat) + len(shared_words))
+                jaccard = len(shared_words) / (len(song_txt_flat) + len(news_txt_flat) - len(shared_words))
                 jaccard = round(jaccard, 3)
                 jaccard_dict[news_yr].append(jaccard)
 
