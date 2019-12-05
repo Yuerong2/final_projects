@@ -169,12 +169,18 @@ for v in all_top_df.values.tolist():
 
 print('\n')
 print('Jaccard similarity:')
+print('{:7} {:8} {:8} {:8} {:8} {:8}'.format('News_YR', 'sim2YR+0', 'sim2YR+1', 'sim2YR+2', 'sim2YR+3', 'sim2YR+4'))
+# calculate jaccard similarity between news and songs, using a five-year sliding window
 jaccard_11yr = jaccard_sim(news_data, song_data)
-for news_yr, jac_val in jaccard_11yr.items():
-    # print jaccard similarity between news and songs, using a five-year sliding window
-    print(news_yr, jac_val)
+for news_yr, jac_vals in jaccard_11yr.items():
+    print(
+        '{:<7} {:<8} {:<8} {:<8} {:<8} {:<8}'.format(news_yr,
+                                                     jac_vals[0], jac_vals[1], jac_vals[2], jac_vals[3], jac_vals[4]))
+    # Example:
+    # If news_yr == 2001,
+    # jac_vals are the Jaccard similarity between news published in 2001 and songs published between 2001-2005
 
-# make fig
+# make fig of Jaccard scores
 t = ['news_yr', 'news_yr + 1', 'news_yr + 2', 'news_yr + 3', 'news_yr + 4']
 y_labels = list(jaccard_11yr.keys())
 colormap = plt.cm.Greens
@@ -183,12 +189,11 @@ fig, ax1 = plt.subplots(figsize=(12, 7))
 ax1.set_xlabel('year progression', fontsize=15)
 ax1.set_ylabel('jaccard similarity', color='k', fontsize=13)
 color_count = 0
-for ylab, cos_values in jaccard_11yr.items():
+for ylab, jac_values in jaccard_11yr.items():
     color_count += 1
-    line = cos_values
+    line = jac_values
     ax1.plot(t, line, color=color[color_count], label=ylab)
 ax1.tick_params(axis='y', labelcolor='k')
-
 fig.tight_layout()
 plt.legend(loc='upper right', prop={'size': 15})
 plt.title('Jaccard Similarity; 5-year sliding window', fontsize=20)
@@ -197,12 +202,18 @@ plt.show()
 
 print('\n')
 print('Cosine similarity:')
+print('{:7} {:8} {:8} {:8} {:8} {:8}'.format('News_YR', 'sim2YR+0', 'sim2YR+1', 'sim2YR+2', 'sim2YR+3', 'sim2YR+4'))
 cosine_11yr = cosine_sim(news_data, song_data)
-for news_yr, cos_val in cosine_11yr.items():
-    # print cosine similarity between news and songs, using a five-year sliding window
-    print(news_yr, cos_val)
+for news_yr, cos_vals in cosine_11yr.items():
+    print(
+        '{:<7} {:<8} {:<8} {:<8} {:<8} {:<8}'.format(news_yr,
+                                                     cos_vals[0], cos_vals[1], cos_vals[2], cos_vals[3], cos_vals[4]))
 
-# make fig
+    # Example:
+    # If news_yr == 2001,
+    # cos_vals are the cosine similarity between news published in 2001 and songs published between 2001-2005
+
+# make fig of cosine scores
 t = ['news_yr', 'news_yr + 1', 'news_yr + 2', 'news_yr + 3', 'news_yr + 4']
 y_labels = list(cosine_11yr.keys())
 colormap = plt.cm.Reds
@@ -216,7 +227,6 @@ for ylab, cos_values in cosine_11yr.items():
     line = cos_values
     ax1.plot(t, line, color=color[color_count], label=ylab)
 ax1.tick_params(axis='y', labelcolor='k')
-
 fig.tight_layout()
 plt.legend(loc='upper right', prop={'size': 15})
 plt.title('Cosine Similarity; 5-year sliding window', fontsize=20)
