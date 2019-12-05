@@ -165,7 +165,7 @@ news_top = get_top_words(news_tfidf, n_words=n_top_words)
 all_top_df = pd.concat([news_top, song_top], axis=1)
 all_top_df.columns = ['Year', 'N_term', 'N_tfidf', 'S_yr', 'S_term', 'S_tfidf']
 all_top_df = all_top_df[['Year', 'N_term', 'N_tfidf', 'S_term', 'S_tfidf']]
-all_top_df.set_index('Year').to_csv('TTFIDF_top_terms.csv')
+all_top_df.set_index('Year').to_csv('TFIDF_top_terms.csv')
 
 shared = [['Year', 'N_in_both', 'words_in_both']]
 for year in range(15):
@@ -176,7 +176,7 @@ for year in range(15):
     in_both = list(top_w_news.intersection(top_w_song))
     n_shared = len(in_both)
     if n_shared > 0:
-        shared.append([year, n_shared, ' '.join(in_both)])
+        shared.append([year, n_shared, '|'.join(in_both)])
     else:
         shared.append([year, 0, '-'])
 
