@@ -154,6 +154,7 @@ def cosine_sim(news_data_dict: dict, song_data_dict: dict):
 
     return cosine_sim11
 
+
 n_top_words = 100
 song_data = read_data(path2song, yr_loc=3, ti_loc=1, txt_loc=4)
 song_tfidf = cal_tf_idf(song_data)
@@ -164,26 +165,32 @@ news_tfidf = cal_tf_idf(news_data)
 news_top = get_top_words(news_tfidf, n_words=n_top_words)
 
 all_top_df = pd.concat([news_top, song_top], axis=1)
-all_top_df.columns = ['Year', 'N_term', 'N_tfidf', 'S_yr', 'S_term', 'S_tfidf']
-all_top_df = all_top_df[['Year', 'N_term', 'N_tfidf', 'S_term', 'S_tfidf']]
-all_top_df.set_index('Year').to_csv('TFIDF_top_terms.csv')
+all_top_df.columns = ['N_yr', 'N_term', 'N_tfidf', 'S_yr', 'S_term', 'S_tfidf']
+all_top_out = all_top_df[['N_yr', 'N_term', 'N_tfidf', 'S_term', 'S_tfidf']].rename(columns={'N_yr': 'Year'})
+all_top_out.set_index('Year').to_csv('TFIDF_top_terms.csv')
 
-shared = [['Year', 'N_in_both', 'words_in_both']]
+shared = [['NewsYR/SongYR', 'N_in_both', 'words_in_both']]
 for year in range(15):
-    year = 2001 + year
-    df_1yr = all_top_df.loc[all_top_df.Year == year]
-    top_w_news = set(df_1yr.N_term.tolist())
-    top_w_song = set(df_1yr.S_term.tolist())
-    in_both = list(top_w_news.intersection(top_w_song))
-    n_shared = len(in_both)
-    if n_shared > 0:
-        shared.append([year, n_shared, '|'.join(in_both)])
-    else:
-        shared.append([year, 0, '-'])
+    news_year = 2001 + year
+    df_1yr_news = all_top_df.loc[all_top_df.N_yr == news_year]
+    top_w_news = set(df_1yr_news.N_term.tolist())
+    for yr in range(15-year):
+        song_year = news_year + yr
+        df_1yr_song = all_top_df.loc[all_top_df.S_yr == song_year]
+        top_w_song = set(df_1yr_song.S_term.tolist())
+        in_both = list(top_w_news.intersection(top_w_song))
+        n_shared = len(in_both)
+        yr_pair = str(news_year) + ' / ' + str(song_year)
+        if n_shared > 0:
+            shared.append([yr_pair, n_shared, '|'.join(in_both)])
+        else:
+            shared.append([yr_pair, 0, '-'])
 
 print('Number of high TF-IDF words found in both corpus: (among', n_top_words, 'words with highest TD-IDF)')
 for each in shared:
-    print('{:4}  {:<9}  {:<}'.format(each[0], each[1], each[2]))
+    print('{:<13}  {:<9}  {:<}'.format(each[0], each[1], each[2]))
+    with open('TFIDF_found_in_both.csv', 'a') as fout:
+        fout.write(each[0]+','+str(each[1])+','+each[2]+'\n')
 
 
 print('\n')
