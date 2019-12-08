@@ -28,6 +28,9 @@
 
  2.1 Topic Modeling : Model the topics in the top 100 songs and news (2000-2015) 
  2.1.1 Latent Dirichlet Allocation topic modeling
+ - Scripts:Part_2_1_1_LDA_lyrics.ipynb & Part_2_1_1_LDA_news.ipynb
+ - Output: dominant_topics_lyrics.csv & dominant_topics_news.csv
+ 
  
  2.1.2 Cross-collection latent Dirichlet allocation (ccLDA) topic modeling
  - Scripts
