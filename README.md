@@ -52,13 +52,17 @@
  
  - Overview of results:
 - Compare sentiment scores of "pos"
-- ![Image of Sentiment Scores "pos"](./output/compare_pos.png)
+
+ ![Image of Sentiment Scores "pos"](./output/compare_pos.png)
 - Compare sentiment scores of "neg"
-- ![Image of Sentiment Scores "neg"](./output/compare_neg.png)
+
+ ![Image of Sentiment Scores "neg"](./output/compare_neg.png)
 - Compare sentiment scores of "neu"
-- ![Image of Sentiment Scores "neu"](./output/compare_neu.png)
+
+  ![Image of Sentiment Scores "neu"](./output/compare_neu.png)
 - Compare sentiment scores of "comp"
-- ![Image of Sentiment Scores "comp"](./output/compare_comp.png)
+
+  ![Image of Sentiment Scores "comp"](./output/compare_comp.png)
 * For detailed statistical data regarding the visualizations above, please see: ./output/sentiment_scores_stats.csv_
  
 ** The pos, neu, and neg scores are ratios for proportions of text that fall in each category (so these should all add up to be 1... or close to it with float operation). These are the most useful metrics if you want multidimensional measures of sentiment for a given sentence.
