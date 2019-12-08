@@ -16,35 +16,64 @@
 
 - Comparing the topics of creative works and factual data during the same time
 
- 1. Data wrangling and preprocessing
+ 1. Data wrangling and preprocessing (script: Part_1_Data_preprocessing.py; output:cleaned_data(folder))
 
  1.1 Collect and align datasets
 
- 1.2 Slice the datasets and build up pairs of subsets for comparison (for instance, lyrics and news datasets from 2000 to   
-     2005)
+ 1.2 Slice the datasets and build up paired samples for comparison 
 
- 1.3 Build up alternative pairs of datasets with a time delay (for instance, news dataset from 2000 to 005 and lyrics dataset      from 2001 to 2006)
+ 1.3 Build up alternative pairs of datasets with a time delay (for instance, news dataset from 2000 to 005 and lyrics dataset  from 2001 to 2006)
 
- 2. Topic modeling
+ 2. Text analysis 
 
- 2.1 Model the topics in the top 100 songs and news (2000-2015)
+ 2.1 Topic Modeling : Model the topics in the top 100 songs and news (2000-2015) 
+ 2.1.1 Latent Dirichlet Allocation topic modeling
+ - Scripts:Part_2_1_1_LDA_lyrics.ipynb & Part_2_1_1_LDA_news.ipynb
+ - Output: dominant_topics_lyrics.csv & dominant_topics_news.csv
+ 
+ 
+ 2.1.2 Cross-collection latent Dirichlet allocation (ccLDA) topic modeling
+ - Scripts
+   Part_2_1_2_create_input4cclda.py
+ - Output:
+   ccLDA_output_topwords.txt
+   Here are the top 20 topics:  
+   ![Image of cclda 20 topics](cclda_20_topics.png)
+ 
+   
 
- 2.2 Analyze the within-group and between-group cohesion/similarity of topics in songs and news
+ 2.2 Word (feature) selection and  text analysis based on word features. For example, analyze the within-group and between-group cohesion/similarity of topics in songs and news
 
- Or Text analytics with bag of words model
+ Or text analytics with bag of words model
 
- 2.1. word (feature) selection
+ 2.3 Sentiment analysis
+ 
+ - Script: Part_2_3_sentiment analysis; Part_2_3_sentiment_scores_analysis.ipynb
+ 
+ - Output: LyricsSentimentScores.csv & NewsSentimentScores.csv; ./output/sentiment_scores_stats.csv
+ 
+ - Overview of results:
+- Compare sentiment scores of "pos"
 
- 2.2  text analysis based on word features
+ ![Image of Sentiment Scores "pos"](./output/compare_pos.png)
+- Compare sentiment scores of "neg"
+
+ ![Image of Sentiment Scores "neg"](./output/compare_neg.png)
+- Compare sentiment scores of "neu"
+
+ ![Image of Sentiment Scores "neu"](./output/compare_neu.png)
+- Compare sentiment scores of "comp"
+
+ ![Image of Sentiment Scores "comp"](./output/compare_comp.png)
+* For detailed statistical data regarding the visualizations above, please see: ./output/sentiment_scores_stats.csv_
+ 
+** The pos, neu, and neg scores are ratios for proportions of text that fall in each category (so these should all add up to be 1... or close to it with float operation). These are the most useful metrics if you want multidimensional measures of sentiment for a given sentence.
+ The compound score is computed by summing the valence scores of each word in the lexicon, adjusted according to the rules, and then normalized to be between -1 (most extreme negative) and +1 (most extreme positive). This is the most useful metric if you want a single unidimensional measure of sentiment for a given sentence. Calling it a 'normalized, weighted composite score' is accurate.(Reference: https://github.com/cjhutto/vaderSentiment)
 
  3. Discussion and Data Visualization
-
-## Steps
- 1. Get Top 100 songs, and aligned News dataset
- 2. Subset data by 5-year time window (2000-2005, 2006-2010, 2011-2015)
- 3. Perform topic modeling/text analysis on the song lyrics and news of each subset of data
-
-## Datasets going to use
+- General Conclusion:
+- 2.3: Lyrics are more "emotional" than the news
+## Datasets used
 
 - Songs: https://www.kaggle.com/rakannimer/billboard-lyrics [coverage: 1965-2015)]
 - News:  in progress of data wrangling   
@@ -64,3 +93,8 @@
     - limitation: can only download 100 record each time
     - what we can get from the downloaded data:    
       * Title, abstract, pub date, and some other extra but might not be useful columns
+      
+
+
+Notes to us:
+Yuerong: I have created 3 functions with doctests. I see that Esther has created 2 in Part_1_Data_preprocessing.py with doctests and 5 in Part_2_Analytics_bow_approach.py without doctests. I think we have met the "10" requirments.
