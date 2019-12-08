@@ -51,14 +51,20 @@
  - Output: LyricsSentimentScores.csv & NewsSentimentScores.csv; ./output/sentiment_scores_stats.csv
  
  - Overview of results:
-
+Compare sentiment scores of "pos"
 ![Image of Sentiment Scores "pos"](./output/compare_pos.png)
+Compare sentiment scores of "neg"
 ![Image of Sentiment Scores "neg"](./output/compare_neg.png)
+Compare sentiment scores of "neu"
 ![Image of Sentiment Scores "neu"](./output/compare_neu.png)
+Compare sentiment scores of "comp"
 ![Image of Sentiment Scores "comp"](./output/compare_comp.png)
-
-For detailed statistical data regarding the visualizations above, please see: ./output/sentiment_scores_stats.csv
+* For detailed statistical data regarding the visualizations above, please see: ./output/sentiment_scores_stats.csv_
  
+
+** The pos, neu, and neg scores are ratios for proportions of text that fall in each category (so these should all add up to be 1... or close to it with float operation). These are the most useful metrics if you want multidimensional measures of sentiment for a given sentence. (Reference: https://github.com/cjhutto/vaderSentiment)
+** The compound score is computed by summing the valence scores of each word in the lexicon, adjusted according to the rules, and then normalized to be between -1 (most extreme negative) and +1 (most extreme positive). This is the most useful metric if you want a single unidimensional measure of sentiment for a given sentence. Calling it a 'normalized, weighted composite score' is accurate.(Reference: https://github.com/cjhutto/vaderSentiment)
+
  3. Discussion and Data Visualization
 
 
