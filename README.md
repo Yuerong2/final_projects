@@ -46,9 +46,16 @@
 
  2.3 Sentiment analysis
  
- - Script: Part_2_3_sentiment analysis
+ - Script: Part_2_3_sentiment analysis; Part_2_3_sentiment_scores_analysis.ipynb
  
- - Output: LyricsSentimentScores.csv & NewsSentimentScores.csv
+ - Output: LyricsSentimentScores.csv & NewsSentimentScores.csv; ./output/sentiment_scores_stats.csv
+ 
+ - Overview of results:
+![Image of Sentiment Scores "pos"](./output/compare_pos.png)
+![Image of Sentiment Scores "neg"](./output/compare_neg.png)
+![Image of Sentiment Scores "neu"](./output/compare_neu.png)
+![Image of Sentiment Scores "comp"](./output/compare_comp.png)
+For detailed statistical data regarding the visualizations above, please see: ./output/sentiment_scores_stats.csv
  
  3. Discussion and Data Visualization
 
@@ -74,7 +81,6 @@
     - what we can get from the downloaded data:    
       * Title, abstract, pub date, and some other extra but might not be useful columns
       
- ## Outline of outcome
 
 
 Notes to us:
