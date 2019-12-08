@@ -8,27 +8,39 @@ import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 
-start_time = time()
-
-path2song = r'cleaned_data/billboard_lyrics_2001-2015.csv'
-path2news = r'cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv'
-# song = pd.read_csv('cleaned_data/billboard_lyrics_2001-2015.csv')
-# news = pd.read_csv('cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv')
-# print(song.shape)
-# print(song.columns)
-# print(news.shape)
-# print(news.columns)
-
 
 def read_data(path2file: str, yr_loc: int, ti_loc: int, txt_loc: int):
+    """ Read files and process files by organizing data by each year.
+
+    :param path2file: path to files, should be a string
+    :param yr_loc: an integer pointing to the column where "year" is in the file
+    :param ti_loc: an integer pointing to the column where "title" is in the file
+    :param txt_loc: an integer pointing to the column where the main text is in the file
+    :return: a dictionary (defaultdict), in which years are the key, and values are lists of lists.
+             Each sublist contains the data of a news/song.
+
+    >>> p1 = r'cleaned_data/billboard_lyrics_2001-2015.csv'
+    >>> all_songs = read_data(p1, 3, 1, 4)
+    >>> type(all_songs)
+    <class 'collections.defaultdict'>
+    >>> len(all_songs.keys())
+    15
+    >>> songs_keys = list(all_songs.keys()) # check whether all the keys are years by datatype being numbers
+    >>> sum([isinstance(k, int) for k in songs_keys])
+    15
+    >>> yr_len = [len(str(k)) for k in songs_keys] # check whether all the keys are year (if so, length should all be 4)
+    >>> yr_len_should_be = [4]*len(songs_keys)
+    >>> yr_len == yr_len_should_be
+    True
+    """
     lemmatizer = WordNetLemmatizer()
     data_per_yr = defaultdict(list)
     with open(path2file, 'r') as fin:
         lines = fin.readlines()[1:]
-        for line in lines:
-            line = line.replace('\n', '').split(',')
-            yr = int(line[yr_loc])
-            full_txt = (line[ti_loc] + ' ' + line[txt_loc]).split()
+        for each_line in lines:
+            each_line = each_line.replace('\n', '').split(',')
+            yr = int(each_line[yr_loc])
+            full_txt = (each_line[ti_loc] + ' ' + each_line[txt_loc]).split()
 
             full_txt_out = []
             for word in full_txt:
@@ -44,8 +56,32 @@ def read_data(path2file: str, yr_loc: int, ti_loc: int, txt_loc: int):
 
 
 def cal_tf_idf(data: dict):
+    """ calcuate TD-IDF of words in data
+
+    :param data: a dict, values are lists of lists
+    :return: a dict, keys are years and values are lists of lists.
+             In each sublist, the first item is the word, the second item is the TF-IDF score of the word.
+    >>> a = defaultdict(list)
+    >>> a[2019] = [['IS590PR', 'best', 'class', 'ever'], ['Doing', 'project', 'winterbreak', 'best']]
+    >>> a_tfidf = cal_tf_idf(a)
+    >>> type(a)
+    <class 'collections.defaultdict'>
+    >>> val2019 = a_tfidf[2019]
+    >>> type(val2019)
+    <class 'list'>
+    >>> isinstance(val2019[0][0], str)
+    True
+    >>> isinstance(val2019[0][1], float)
+    True
+    >>> b = [['IS590PR', 'best', 'class', 'ever'], ['Doing', 'project', 'winterbreak', 'best']]
+    >>> cal_tf_idf(b)
+    Traceback (most recent call last):
+    ValueError: input must be an dictionary
+    """
+    if isinstance(data, dict) is False:
+        raise ValueError('input must be an dictionary')
+
     tf_idf_dict = defaultdict(list)
-    c = 0
     for yr, docs in data.items():
         unique_words_docs_sum = []
         for doc in docs:
@@ -56,18 +92,13 @@ def cal_tf_idf(data: dict):
 
         n_doc = len(docs)
 
-        terms_in_doc = []
         for doc in docs:
-            c += 1
             term_freq = Counter(doc)
-            doc_id = str(yr) + '_' + str(c)
-            terms_in_doc.append(doc_id)
             for term, freq in term_freq.items():
                 tf = freq/sum(term_freq.values())
                 df = df_dict[term]
                 tf_idf = tf * np.log(n_doc/(df+1))
-                terms_in_doc.append([term, tf_idf])
-        tf_idf_dict[yr].append(terms_in_doc)
+                tf_idf_dict[yr].append([term, tf_idf])
 
     return tf_idf_dict
 
@@ -75,11 +106,10 @@ def cal_tf_idf(data: dict):
 def get_top_words(tfidf_dict: dict, n_words=10):
     header = ['year', 'term', 'tf-idf']
     dfs = []
-    for year, docs in tfidf_dict.items():
+    for each_year, tfidf_scores in tfidf_dict.items():
         df_list = []
-        for doc in docs:
-            for items in doc[1:]:
-                df_list.append([year, items[0], float(items[1])])
+        for term_score in tfidf_scores:
+            df_list.append([each_year, term_score[0], float(term_score[1])])
         yr_df = pd.DataFrame(df_list, columns=header)
         yr_df = yr_df.sort_values(by=['tf-idf'], ascending=False)
         yr_df = yr_df.iloc[:n_words].reset_index(drop=True)
@@ -155,6 +185,11 @@ def cosine_sim(news_data_dict: dict, song_data_dict: dict):
     return cosine_sim11
 
 
+start_time = time()
+
+path2song = r'cleaned_data/billboard_lyrics_2001-2015.csv'
+path2news = r'cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv'
+
 n_top_words = 100
 song_data = read_data(path2song, yr_loc=3, ti_loc=1, txt_loc=4)
 song_tfidf = cal_tf_idf(song_data)
@@ -176,8 +211,8 @@ for year in range(15):
     window_count += 1
     df_1yr_news = all_top_df.loc[all_top_df.N_yr == news_year]
     top_w_news = set(df_1yr_news.N_term.tolist())
-    for yr in range(15-year):
-        song_year = news_year + yr
+    for each_yr in range(15-year):
+        song_year = news_year + each_yr
         if song_year >= news_year and song_year - news_year < 5:
             df_1yr_song = all_top_df.loc[all_top_df.S_yr == song_year]
             top_w_song = set(df_1yr_song.S_term.tolist())
