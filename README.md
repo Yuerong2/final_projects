@@ -51,10 +51,12 @@
  - Output: LyricsSentimentScores.csv & NewsSentimentScores.csv; ./output/sentiment_scores_stats.csv
  
  - Overview of results:
+
 ![Image of Sentiment Scores "pos"](./output/compare_pos.png)
 ![Image of Sentiment Scores "neg"](./output/compare_neg.png)
 ![Image of Sentiment Scores "neu"](./output/compare_neu.png)
 ![Image of Sentiment Scores "comp"](./output/compare_comp.png)
+
 For detailed statistical data regarding the visualizations above, please see: ./output/sentiment_scores_stats.csv
  
  3. Discussion and Data Visualization
