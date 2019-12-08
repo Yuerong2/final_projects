@@ -48,8 +48,8 @@ def rewrite4cclda(num:str,filepath:str,column_name:str):
     print('done')
     f.close()
 
-rewrite4cclda('0','NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv',"Abstract")
-rewrite4cclda('1','billboard_lyrics_2001-2015.csv','Lyrics')
+rewrite4cclda('0','../cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv',"Abstract")
+rewrite4cclda('1','../cleaned_data/billboard_lyrics_2001-2015.csv','Lyrics')
 
 
 
