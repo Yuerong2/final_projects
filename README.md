@@ -27,6 +27,13 @@
  2. Text analysis 
 
  2.1 Topic Modeling : Model the topics in the top 100 songs and news (2000-2015) 
+ 
+ - Scripts
+   in folder: ccLDA
+   /ccLDA/create_input4cclda.py
+ - Output:
+   ccLDA_output_topwords.txt
+   
 
  2.2 Word (feature) selection and  text analysis based on word features. For example, analyze the within-group and between-group cohesion/similarity of topics in songs and news
 
