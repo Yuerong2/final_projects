@@ -27,10 +27,12 @@
  2. Text analysis 
 
  2.1 Topic Modeling : Model the topics in the top 100 songs and news (2000-2015) 
+ 2.1.1 Latent Dirichlet Allocation topic modeling
  
+ 2.1.2 Cross-collection latent Dirichlet allocation (ccLDA) topic modeling
  - Scripts
    in folder: ccLDA
-   /ccLDA/create_input4cclda.py
+   Part_2_1_2_/ccLDA/create_input4cclda.py
  - Output:
    ccLDA_output_topwords.txt
    
@@ -41,7 +43,7 @@
 
  2.3 Sentiment analysis
  
- - Script: sentiment analysis
+ - Script: Part_2_3_sentiment analysis
  
  - Output: LyricsSentimentScores.csv & NewsSentimentScores.csv
  
@@ -70,3 +72,7 @@
       * Title, abstract, pub date, and some other extra but might not be useful columns
       
  ## Outline of outcome
+
+
+Notes to us:
+Yuerong: I have created 3 functions with doctests. I see that Esther has created 2 in Part_1_Data_preprocessing.py with doctests and 5 in Part_2_Analytics_bow_approach.py without doctests. I think we have met the "10" requirments.
