@@ -1,7 +1,6 @@
 # List of the pip packages that must be installed for this project
 pandas
 vaderSentiment
-string
 nltk
 numpy
 matplotlib
