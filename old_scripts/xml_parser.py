@@ -41,7 +41,7 @@ for each_news in news:
 
 df_news = pd.DataFrame(df_list, columns=['news_id', 'year', 'title', 'abstract'])
 
-p_out = '/Users/iwishsomeday/Documents/PYCharm/PR590/final_projects/NewYorkTimes_CoverStory_2001-2015.csv'
+p_out = 'NewYorkTimes_CoverStory_2001-2015.csv'
 with open(p_out, 'a') as fout:
     fout.write('news_id' + ',' + 'year' + ',' + 'title' + ',' + 'abstract' + '\n')
 df_news.set_index('news_id').to_csv(p_out, mode='a', header=False)
