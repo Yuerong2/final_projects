@@ -5,4 +5,3 @@ nltk
 numpy
 matplotlib
 lxml
-nltk.download('all')
