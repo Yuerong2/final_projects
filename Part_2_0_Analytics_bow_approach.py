@@ -182,7 +182,6 @@ def jaccard_sim(news_data_dict: dict, song_data_dict: dict):
     >>> len(j_sim[2001])
     5
     """
-
     jaccard_dict = defaultdict(list)
 
     for news_yr, news_txt in news_data_dict.items():
@@ -223,12 +222,12 @@ def cosine_sim(news_data_dict: dict, song_data_dict: dict):
     >>> news1 = defaultdict(list)
     >>> news1[2001] = [['programming', 'healthy', 'activity'], ['cats', 'are' 'mystic']]
     >>> songs1 = defaultdict(list)
-    >>> songs1[2001] = [['programming', 'healthy', 'activity'], ['cats', 'are' 'mystic']]
+    >>> songs1[2001] = [['programming', 'healthy', 'activity'], ['cats', 'are' 'fun']]
     >>> songs1[2002] = [['programming', 'brain', 'activity'], ['cats', 'are' 'cute']]
     >>> songs1[2003] = [['programming', 'good', 'brain'], ['cats', 'are' 'dangerous']]
     >>> songs1[2004] = [['programming', 'hard', 'activity'], ['dogs', 'are' 'cute']]
     >>> songs1[2005] = [['programming', 'healthy', 'thing'], ['dogs', 'are' 'loyal']]
-    >>> cos_sim = jaccard_sim(news1, songs1)
+    >>> cos_sim = cosine_sim(news1, songs1)
     >>> type(cos_sim)
     <class 'collections.defaultdict'>
     >>> list(cos_sim.keys())
@@ -236,7 +235,6 @@ def cosine_sim(news_data_dict: dict, song_data_dict: dict):
     >>> len(cos_sim[2001])
     5
     """
-
     cosine_dict = defaultdict(list)
 
     for news_yr, news_txt in news_data_dict.items():
@@ -275,7 +273,46 @@ def cosine_sim(news_data_dict: dict, song_data_dict: dict):
 
     return cosine_dict
 
-if __name__=="__main__":
+
+def draw_pic(data2draw, cmp='Greens'):
+    """ This function is for making a graph to show the 5-year trend of similarity
+
+    :param data2draw: an dictionary, keys are the years while values are the similarities
+    :param cmp: colormap for drawing the graph, default as Greens
+    :return: pyplot axes
+    >>> draw = dict()
+    >>> draw[2001] = [0.1, 0.2, 0.3, 0.4, 0.3]
+    >>> draw[2002] = [0.01, 0.02, 0.03, 0.04, 0.03]
+    >>> a_pic = draw_pic(draw)
+    >>> type(a_pic)
+    <class 'matplotlib.axes._subplots.AxesSubplot'>
+    >>> draw2 = dict()
+    >>> draw2[2001] = [0.1, 0.2, 0.3, 0.4]
+    >>> draw2[2002] = [0.01, 0.02, 0.03, 0.04]
+    >>> draw_pic(draw2)
+    Traceback (most recent call last):
+    ValueError: The number of similarity scores should be five.
+    """
+    t = ['news_yr', 'news_yr + 1', 'news_yr + 2', 'news_yr + 3', 'news_yr + 4']
+    colormap = plt.cm.get_cmap(str(cmp))
+    color = [colormap(i) for i in np.linspace(0, 1, 12)]
+    fig, ax1 = plt.subplots(figsize=(12, 7))
+    color_count = 0
+    for ylab, sim_values in data2draw.items():
+        if len(sim_values) == 5:
+            color_count += 1
+            line = sim_values
+            ax1.plot(t, line, color=color[color_count], label=ylab)
+        else:
+            raise ValueError('The number of similarity scores should be five.')
+    ax1.tick_params(axis='y', labelcolor='k')
+    fig.tight_layout()
+    plt.legend(loc='upper right', prop={'size': 15})
+
+    return ax1
+
+
+if __name__ == "__main__":
     start_time = time()
 
     path2song = r'cleaned_data/billboard_lyrics_2001-2015.csv'
@@ -308,6 +345,7 @@ if __name__=="__main__":
                 df_1yr_song = all_top_df.loc[all_top_df.S_yr == song_year]
                 top_w_song = set(df_1yr_song.S_term.tolist())
                 in_both = list(top_w_news.intersection(top_w_song))
+                in_both.sort()
                 n_shared = len(in_both)
                 yr_pair = str(news_year) + '/' + str(song_year)
                 if n_shared > 0:
@@ -321,7 +359,6 @@ if __name__=="__main__":
         with open('TFIDF_found_in_both.csv', 'a') as fout:
             fout.write(each[0]+','+each[1]+','+str(each[2])+','+each[3]+'\n')
 
-    print('\n')
     print('Jaccard similarity:')
     print('{:7} {:8} {:8} {:8} {:8} {:8}'.format('News_YR', 'sim2YR+0', 'sim2YR+1', 'sim2YR+2', 'sim2YR+3', 'sim2YR+4'))
     # calculate jaccard similarity between news and songs, using a five-year sliding window
@@ -332,26 +369,13 @@ if __name__=="__main__":
                                                          jac_vals[0], jac_vals[1], jac_vals[2], jac_vals[3], jac_vals[4]))
 
     # make fig of Jaccard scores
-    t = ['news_yr', 'news_yr + 1', 'news_yr + 2', 'news_yr + 3', 'news_yr + 4']
-    y_labels = list(jaccard_11yr.keys())
-    colormap = plt.cm.Greens
-    color = [colormap(i) for i in np.linspace(0, 1, 12)]
-    fig, ax1 = plt.subplots(figsize=(12, 7))
-    ax1.set_xlabel('year progression', fontsize=15)
-    ax1.set_ylabel('jaccard similarity', color='k', fontsize=13)
-    color_count = 0
-    for ylab, jac_values in jaccard_11yr.items():
-        color_count += 1
-        line = jac_values
-        ax1.plot(t, line, color=color[color_count], label=ylab)
-    ax1.tick_params(axis='y', labelcolor='k')
-    fig.tight_layout()
-    plt.legend(loc='upper right', prop={'size': 15})
+    jpic = draw_pic(jaccard_11yr, cmp='Greens')
+    jpic.set_xlabel(str('year progression'), fontsize=15)
+    jpic.set_ylabel(str('Jaccard similarity'), color='k', fontsize=13)
     plt.title('Jaccard Similarity; 5-year sliding window', fontsize=20)
     plt.savefig('Graphs/jaccard_similarity.png', dpi=300)
     plt.show()
 
-    print('\n')
     print('Cosine similarity:')
     print('{:7} {:8} {:8} {:8} {:8} {:8}'.format('News_YR', 'sim2YR+0', 'sim2YR+1', 'sim2YR+2', 'sim2YR+3', 'sim2YR+4'))
     cosine_11yr = cosine_sim(news_data, song_data)
@@ -361,35 +385,11 @@ if __name__=="__main__":
                                                          cos_vals[0], cos_vals[1], cos_vals[2], cos_vals[3], cos_vals[4]))
 
     # make fig of cosine scores
-    t = ['news_yr', 'news_yr + 1', 'news_yr + 2', 'news_yr + 3', 'news_yr + 4']
-    y_labels = list(cosine_11yr.keys())
-    colormap = plt.cm.Reds
-    color = [colormap(i) for i in np.linspace(0, 1, 12)]
-    fig, ax1 = plt.subplots(figsize=(12, 7))
-    ax1.set_xlabel('year progression', fontsize=15)
-    ax1.set_ylabel('cosine similarity', color='k', fontsize=13)
-    color_count = 0
-    for ylab, cos_values in cosine_11yr.items():
-        color_count += 1
-        line = cos_values
-        ax1.plot(t, line, color=color[color_count], label=ylab)
-    ax1.tick_params(axis='y', labelcolor='k')
-    fig.tight_layout()
-    plt.legend(loc='upper right', prop={'size': 15})
+    cpic = draw_pic(cosine_11yr, cmp='Reds')
+    cpic.set_xlabel(str('year progression'), fontsize=15)
+    cpic.set_ylabel(str('cosine similarity'), color='k', fontsize=13)
     plt.title('Cosine Similarity; 5-year sliding window', fontsize=20)
     plt.savefig('Graphs/cosine_similarity.png', dpi=300)
     plt.show()
 
-    print('\n')
     print('run time:', time()-start_time)
-
-
-
-
-
-
-
-
-
-
-
