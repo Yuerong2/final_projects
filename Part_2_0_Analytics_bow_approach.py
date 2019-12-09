@@ -1,4 +1,4 @@
-# This script is for calculating TF-IDF and text similarity
+# This script is for calculating TF-IDF and text similarity (using cosine and Jaccard).
 
 from collections import defaultdict
 from collections import Counter
@@ -153,8 +153,8 @@ def get_top_words(tfidf_dict: dict, n_words=10):
 
 
 def jaccard_sim(news_data_dict: dict, song_data_dict: dict):
-    """ Calculate Jaccard similarity between one year of news and songs published within the same and next 4 years.
-        For exmple, if news were published in 2001, this function calculated the similarity between the following pairs:
+    """ Calculate Jaccard similarity between one year of news and songs published within the same and the next 4 years.
+        For example, if news were published in 2001, this function calculated the similarity between the pairs below:
         - news (published in 2001) , songs (published in 2001)
         - news (published in 2001) , songs (published in 2002)
         - news (published in 2001) , songs (published in 2003)
@@ -165,7 +165,7 @@ def jaccard_sim(news_data_dict: dict, song_data_dict: dict):
     :param song_data_dict: an dictionary containing song data
     :return: an dictionary (defalutdict),
              keys are the year of the news being published, while
-             values are the Jaccard similarity between news and the songs.
+             values are the Jaccard similarity between news and the songs in the time window.
     >>> news1 = defaultdict(list)
     >>> news1[2001] = [['programming', 'healthy', 'activity'], ['cats', 'are' 'mystic']]
     >>> songs1 = defaultdict(list)
@@ -206,8 +206,38 @@ def jaccard_sim(news_data_dict: dict, song_data_dict: dict):
 
 
 def cosine_sim(news_data_dict: dict, song_data_dict: dict):
+    """ Calculate consine similarity between one year of news and songs published within the same and the next 4 years.
+        For example, if news were published in 2001, this function calculated the similarity between the pairs below:
+        - news (published in 2001) , songs (published in 2001)
+        - news (published in 2001) , songs (published in 2002)
+        - news (published in 2001) , songs (published in 2003)
+        - news (published in 2001) , songs (published in 2004)
+        - news (published in 2001) , songs (published in 2005)
 
-    cosine_sim11 = defaultdict(list)
+    :param news_data_dict: an dictionary containing news data
+    :param song_data_dict: an dictionary containing song data
+    :return: an dictionary (defalutdict),
+             keys are the year of the news being published, while
+             values are the cosine similarity between news and the songs in the time window.
+
+    >>> news1 = defaultdict(list)
+    >>> news1[2001] = [['programming', 'healthy', 'activity'], ['cats', 'are' 'mystic']]
+    >>> songs1 = defaultdict(list)
+    >>> songs1[2001] = [['programming', 'healthy', 'activity'], ['cats', 'are' 'mystic']]
+    >>> songs1[2002] = [['programming', 'brain', 'activity'], ['cats', 'are' 'cute']]
+    >>> songs1[2003] = [['programming', 'good', 'brain'], ['cats', 'are' 'dangerous']]
+    >>> songs1[2004] = [['programming', 'hard', 'activity'], ['dogs', 'are' 'cute']]
+    >>> songs1[2005] = [['programming', 'healthy', 'thing'], ['dogs', 'are' 'loyal']]
+    >>> cos_sim = jaccard_sim(news1, songs1)
+    >>> type(cos_sim)
+    <class 'collections.defaultdict'>
+    >>> list(cos_sim.keys())
+    [2001]
+    >>> len(cos_sim[2001])
+    5
+    """
+
+    cosine_dict = defaultdict(list)
 
     for news_yr, news_txt in news_data_dict.items():
         news_txt_flat = []
@@ -239,126 +269,119 @@ def cosine_sim(news_data_dict: dict, song_data_dict: dict):
                 norm_news = norm(np.asarray(news_array))
                 norm_song = norm(np.asarray(song_array))
 
-                sim = np.dot(news_array, song_array) / (norm_news * norm_song)
-                sim = round(sim, 3)
-                cosine_sim11[news_yr].append(sim)
+                cosine = np.dot(news_array, song_array) / (norm_news * norm_song)
+                cosine = round(cosine, 3)
+                cosine_dict[news_yr].append(cosine)
 
-    return cosine_sim11
+    return cosine_dict
 
+if __name__=="__main__":
+    start_time = time()
 
-start_time = time()
+    path2song = r'cleaned_data/billboard_lyrics_2001-2015.csv'
+    path2news = r'cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv'
 
-path2song = r'cleaned_data/billboard_lyrics_2001-2015.csv'
-path2news = r'cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv'
+    n_top_words = 100
+    song_data = read_data(path2song, yr_loc=3, ti_loc=1, txt_loc=4)
+    song_tfidf = cal_tf_idf(song_data)
+    song_top = get_top_words(song_tfidf, n_words=n_top_words)
 
-n_top_words = 100
-song_data = read_data(path2song, yr_loc=3, ti_loc=1, txt_loc=4)
-song_tfidf = cal_tf_idf(song_data)
-song_top = get_top_words(song_tfidf, n_words=n_top_words)
+    news_data = read_data(path2news, yr_loc=1, ti_loc=2, txt_loc=3)
+    news_tfidf = cal_tf_idf(news_data)
+    news_top = get_top_words(news_tfidf, n_words=n_top_words)
 
-news_data = read_data(path2news, yr_loc=1, ti_loc=2, txt_loc=3)
-news_tfidf = cal_tf_idf(news_data)
-news_top = get_top_words(news_tfidf, n_words=n_top_words)
+    all_top_df = pd.concat([news_top, song_top], axis=1)
+    all_top_df.columns = ['N_yr', 'N_term', 'N_tfidf', 'S_yr', 'S_term', 'S_tfidf']
+    all_top_out = all_top_df[['N_yr', 'N_term', 'N_tfidf', 'S_term', 'S_tfidf']].rename(columns={'N_yr': 'Year'})
+    all_top_out.set_index('Year').to_csv('TFIDF_top_terms.csv')
 
-all_top_df = pd.concat([news_top, song_top], axis=1)
-all_top_df.columns = ['N_yr', 'N_term', 'N_tfidf', 'S_yr', 'S_term', 'S_tfidf']
-all_top_out = all_top_df[['N_yr', 'N_term', 'N_tfidf', 'S_term', 'S_tfidf']].rename(columns={'N_yr': 'Year'})
-all_top_out.set_index('Year').to_csv('TFIDF_top_terms.csv')
+    shared = [['Window_ID', 'NewsYR/SongYR', 'N_in_both', 'words_in_both']]
+    window_count = 0
+    for year in range(15):
+        news_year = 2001 + year
+        window_count += 1
+        df_1yr_news = all_top_df.loc[all_top_df.N_yr == news_year]
+        top_w_news = set(df_1yr_news.N_term.tolist())
+        for each_yr in range(15-year):
+            song_year = news_year + each_yr
+            if song_year >= news_year and song_year - news_year < 5:
+                df_1yr_song = all_top_df.loc[all_top_df.S_yr == song_year]
+                top_w_song = set(df_1yr_song.S_term.tolist())
+                in_both = list(top_w_news.intersection(top_w_song))
+                n_shared = len(in_both)
+                yr_pair = str(news_year) + '/' + str(song_year)
+                if n_shared > 0:
+                    shared.append([str(window_count), yr_pair, n_shared, '|'.join(in_both)])
+                else:
+                    shared.append([str(window_count), yr_pair, 0, '-'])
 
-shared = [['Window_ID', 'NewsYR/SongYR', 'N_in_both', 'words_in_both']]
-window_count = 0
-for year in range(15):
-    news_year = 2001 + year
-    window_count += 1
-    df_1yr_news = all_top_df.loc[all_top_df.N_yr == news_year]
-    top_w_news = set(df_1yr_news.N_term.tolist())
-    for each_yr in range(15-year):
-        song_year = news_year + each_yr
-        if song_year >= news_year and song_year - news_year < 5:
-            df_1yr_song = all_top_df.loc[all_top_df.S_yr == song_year]
-            top_w_song = set(df_1yr_song.S_term.tolist())
-            in_both = list(top_w_news.intersection(top_w_song))
-            n_shared = len(in_both)
-            yr_pair = str(news_year) + '/' + str(song_year)
-            if n_shared > 0:
-                shared.append([str(window_count), yr_pair, n_shared, '|'.join(in_both)])
-            else:
-                shared.append([str(window_count), yr_pair, 0, '-'])
+    print('Number of high TF-IDF words found in both corpus: (among', n_top_words, 'words with highest TD-IDF)')
+    for each in shared:
+        print('{:<9}  {:<13}  {:<9}  {:<}'.format(each[0], each[1], each[2], each[3]))
+        with open('TFIDF_found_in_both.csv', 'a') as fout:
+            fout.write(each[0]+','+each[1]+','+str(each[2])+','+each[3]+'\n')
 
-print('Number of high TF-IDF words found in both corpus: (among', n_top_words, 'words with highest TD-IDF)')
-for each in shared:
-    print('{:<9}  {:<13}  {:<9}  {:<}'.format(each[0], each[1], each[2], each[3]))
-    with open('TFIDF_found_in_both.csv', 'a') as fout:
-        fout.write(each[0]+','+each[1]+','+str(each[2])+','+each[3]+'\n')
+    print('\n')
+    print('Jaccard similarity:')
+    print('{:7} {:8} {:8} {:8} {:8} {:8}'.format('News_YR', 'sim2YR+0', 'sim2YR+1', 'sim2YR+2', 'sim2YR+3', 'sim2YR+4'))
+    # calculate jaccard similarity between news and songs, using a five-year sliding window
+    jaccard_11yr = jaccard_sim(news_data, song_data)
+    for news_year, jac_vals in jaccard_11yr.items():
+        print(
+            '{:<7} {:<8} {:<8} {:<8} {:<8} {:<8}'.format(news_year,
+                                                         jac_vals[0], jac_vals[1], jac_vals[2], jac_vals[3], jac_vals[4]))
 
-print('\n')
-print('Jaccard similarity:')
-print('{:7} {:8} {:8} {:8} {:8} {:8}'.format('News_YR', 'sim2YR+0', 'sim2YR+1', 'sim2YR+2', 'sim2YR+3', 'sim2YR+4'))
-# calculate jaccard similarity between news and songs, using a five-year sliding window
-jaccard_11yr = jaccard_sim(news_data, song_data)
-for news_year, jac_vals in jaccard_11yr.items():
-    print(
-        '{:<7} {:<8} {:<8} {:<8} {:<8} {:<8}'.format(news_year,
-                                                     jac_vals[0], jac_vals[1], jac_vals[2], jac_vals[3], jac_vals[4]))
-    # Example:
-    # If news_yr == 2001,
-    # jac_vals are the Jaccard similarity between news published in 2001 and songs published between 2001-2005
+    # make fig of Jaccard scores
+    t = ['news_yr', 'news_yr + 1', 'news_yr + 2', 'news_yr + 3', 'news_yr + 4']
+    y_labels = list(jaccard_11yr.keys())
+    colormap = plt.cm.Greens
+    color = [colormap(i) for i in np.linspace(0, 1, 12)]
+    fig, ax1 = plt.subplots(figsize=(12, 7))
+    ax1.set_xlabel('year progression', fontsize=15)
+    ax1.set_ylabel('jaccard similarity', color='k', fontsize=13)
+    color_count = 0
+    for ylab, jac_values in jaccard_11yr.items():
+        color_count += 1
+        line = jac_values
+        ax1.plot(t, line, color=color[color_count], label=ylab)
+    ax1.tick_params(axis='y', labelcolor='k')
+    fig.tight_layout()
+    plt.legend(loc='upper right', prop={'size': 15})
+    plt.title('Jaccard Similarity; 5-year sliding window', fontsize=20)
+    plt.savefig('Graphs/jaccard_similarity.png', dpi=300)
+    plt.show()
 
-# make fig of Jaccard scores
-t = ['news_yr', 'news_yr + 1', 'news_yr + 2', 'news_yr + 3', 'news_yr + 4']
-y_labels = list(jaccard_11yr.keys())
-colormap = plt.cm.Greens
-color = [colormap(i) for i in np.linspace(0, 1, 12)]
-fig, ax1 = plt.subplots(figsize=(12, 7))
-ax1.set_xlabel('year progression', fontsize=15)
-ax1.set_ylabel('jaccard similarity', color='k', fontsize=13)
-color_count = 0
-for ylab, jac_values in jaccard_11yr.items():
-    color_count += 1
-    line = jac_values
-    ax1.plot(t, line, color=color[color_count], label=ylab)
-ax1.tick_params(axis='y', labelcolor='k')
-fig.tight_layout()
-plt.legend(loc='upper right', prop={'size': 15})
-plt.title('Jaccard Similarity; 5-year sliding window', fontsize=20)
-plt.savefig('Graphs/jaccard_similarity.png', dpi=300)
-plt.show()
+    print('\n')
+    print('Cosine similarity:')
+    print('{:7} {:8} {:8} {:8} {:8} {:8}'.format('News_YR', 'sim2YR+0', 'sim2YR+1', 'sim2YR+2', 'sim2YR+3', 'sim2YR+4'))
+    cosine_11yr = cosine_sim(news_data, song_data)
+    for news_year, cos_vals in cosine_11yr.items():
+        print(
+            '{:<7} {:<8} {:<8} {:<8} {:<8} {:<8}'.format(news_year,
+                                                         cos_vals[0], cos_vals[1], cos_vals[2], cos_vals[3], cos_vals[4]))
 
-print('\n')
-print('Cosine similarity:')
-print('{:7} {:8} {:8} {:8} {:8} {:8}'.format('News_YR', 'sim2YR+0', 'sim2YR+1', 'sim2YR+2', 'sim2YR+3', 'sim2YR+4'))
-cosine_11yr = cosine_sim(news_data, song_data)
-for news_year, cos_vals in cosine_11yr.items():
-    print(
-        '{:<7} {:<8} {:<8} {:<8} {:<8} {:<8}'.format(news_year,
-                                                     cos_vals[0], cos_vals[1], cos_vals[2], cos_vals[3], cos_vals[4]))
+    # make fig of cosine scores
+    t = ['news_yr', 'news_yr + 1', 'news_yr + 2', 'news_yr + 3', 'news_yr + 4']
+    y_labels = list(cosine_11yr.keys())
+    colormap = plt.cm.Reds
+    color = [colormap(i) for i in np.linspace(0, 1, 12)]
+    fig, ax1 = plt.subplots(figsize=(12, 7))
+    ax1.set_xlabel('year progression', fontsize=15)
+    ax1.set_ylabel('cosine similarity', color='k', fontsize=13)
+    color_count = 0
+    for ylab, cos_values in cosine_11yr.items():
+        color_count += 1
+        line = cos_values
+        ax1.plot(t, line, color=color[color_count], label=ylab)
+    ax1.tick_params(axis='y', labelcolor='k')
+    fig.tight_layout()
+    plt.legend(loc='upper right', prop={'size': 15})
+    plt.title('Cosine Similarity; 5-year sliding window', fontsize=20)
+    plt.savefig('Graphs/cosine_similarity.png', dpi=300)
+    plt.show()
 
-    # Example:
-    # If news_yr == 2001,
-    # cos_vals are the cosine similarity between news published in 2001 and songs published between 2001-2005
-
-# make fig of cosine scores
-t = ['news_yr', 'news_yr + 1', 'news_yr + 2', 'news_yr + 3', 'news_yr + 4']
-y_labels = list(cosine_11yr.keys())
-colormap = plt.cm.Reds
-color = [colormap(i) for i in np.linspace(0, 1, 12)]
-fig, ax1 = plt.subplots(figsize=(12, 7))
-ax1.set_xlabel('year progression', fontsize=15)
-ax1.set_ylabel('cosine similarity', color='k', fontsize=13)
-color_count = 0
-for ylab, cos_values in cosine_11yr.items():
-    color_count += 1
-    line = cos_values
-    ax1.plot(t, line, color=color[color_count], label=ylab)
-ax1.tick_params(axis='y', labelcolor='k')
-fig.tight_layout()
-plt.legend(loc='upper right', prop={'size': 15})
-plt.title('Cosine Similarity; 5-year sliding window', fontsize=20)
-plt.savefig('Graphs/cosine_similarity.png', dpi=300)
-plt.show()
-
-print('\n')
-print('run time:', time()-start_time)
+    print('\n')
+    print('run time:', time()-start_time)
 
 
 
