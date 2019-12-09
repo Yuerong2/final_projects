@@ -71,12 +71,12 @@ def cal_tf_idf(data: dict):
     >>> a_tfidf = cal_tf_idf(a)
     >>> type(a)
     <class 'collections.defaultdict'>
-    >>> val2019 = a_tfidf[2019]  # check datatype of values
+    >>> val2019 = a_tfidf[2019]  # check returned data was wrapped properly
     >>> type(val2019)
     <class 'list'>
-    >>> isinstance(val2019[0][0], str)  # check item in sublist. First item is word so type should be str.
+    >>> isinstance(val2019[0][0], str)  # check item in sublist is as expected. First item should be str.
     True
-    >>> isinstance(val2019[0][1], float)  # check item in sublist. Second item is tf-idf so type should be float.
+    >>> isinstance(val2019[0][1], float)  # check item in sublist is as expected. Second item should be float.
     True
     >>> b = [['IS590PR', 'best', 'class', 'ever'], ['Doing', 'project', 'winter', 'break', 'best']]
     >>> cal_tf_idf(b)
@@ -123,16 +123,16 @@ def get_top_words(tfidf_dict: dict, n_words=10):
     >>> df1 = get_top_words(tfidf_exmaple, n_words = 2)
     >>> df1.shape # check "n_words" works.
     (2, 3)
-    >>> df2 = get_top_words(tfidf_exmaple, n_words = 5)  # check the if/else condition
+    >>> df2 = get_top_words(tfidf_exmaple, n_words = 5)  # check function can spot problematic condition
     Traceback (most recent call last):
     ValueError: input of n_words is more than the words in data!
     >>> tfidf_exmaple[2018].append(['cats', 0.8])
     >>> tfidf_exmaple[2018].append(['are', 0.1])
     >>> tfidf_exmaple[2018].append(['cute', 0.9])
     >>> df3 = get_top_words(tfidf_exmaple, n_words = 2)
-    >>> df3.iloc[:,0].drop_duplicates().tolist()  # check appending works
+    >>> df3.iloc[:,0].drop_duplicates().tolist()  # check function can handle input data with multiple years
     [2019, 2018]
-    >>> cols = list(df3.columns)  # check number of columns in dataframe returned are aligned with description.
+    >>> cols = list(df3.columns)  # check number of columns in dataframe returned were aligned with description
     >>> len(cols)
     3
     """
@@ -177,9 +177,9 @@ def find_shared_words(news_df, song_df):
     >>> shared_w = find_shared_words(ndf, sdf)
     >>> shared_w.shape  # check returned dataframe
     (5, 4)
-    >>> shared_w.iloc[0,1]  # check years of news/songs paired correctly.
+    >>> shared_w.iloc[0,1]  # check years of news/songs paired correctly (starting pair)
     '2001/2001'
-    >>> shared_w.iloc[4,1]  # check years of news/songs paired correctly.
+    >>> shared_w.iloc[4,1]  # check years of news/songs paired correctly (ending pair)
     '2001/2005'
     """
     all_top_df = pd.concat([news_df, song_df], axis=1)
@@ -354,7 +354,7 @@ def draw_pic(data2draw, cmp='Greens'):
     >>> draw2 = dict()
     >>> draw2[2001] = [0.1, 0.2, 0.3, 0.4]
     >>> draw2[2002] = [0.01, 0.02, 0.03, 0.04]
-    >>> draw_pic(draw2)  # check if/else condition works
+    >>> draw_pic(draw2)  # check function can spot problematic condition
     Traceback (most recent call last):
     ValueError: The number of similarity scores should be five.
     """
