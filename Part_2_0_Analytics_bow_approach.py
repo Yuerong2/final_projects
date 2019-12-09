@@ -1,3 +1,5 @@
+# This script is for calculating TF-IDF and text similarity
+
 from collections import defaultdict
 from collections import Counter
 from nltk import WordNetLemmatizer
@@ -56,13 +58,16 @@ def read_data(path2file: str, yr_loc: int, ti_loc: int, txt_loc: int):
 
 
 def cal_tf_idf(data: dict):
-    """ calcuate TD-IDF of words in data
+    """ calculate TD-IDF of words in data, by year
 
     :param data: a dict, values are lists of lists
     :return: a dict, keys are years and values are lists of lists.
              In each sublist, the first item is the word, the second item is the TF-IDF score of the word.
+             i.e. [[term1, TF-IDF_1], [term2, TF-IDF2]...]
     >>> a = defaultdict(list)
-    >>> a[2019] = [['IS590PR', 'best', 'class', 'ever'], ['Doing', 'project', 'winterbreak', 'best']]
+    >>> a[2019].append(['IS590PR', 'best', 'class', 'ever'])
+    >>> a[2019].append(['Doing', 'project', 'winter', 'break', 'best'])
+    >>> a[2019].append(['best', 'break', 'glass'])
     >>> a_tfidf = cal_tf_idf(a)
     >>> type(a)
     <class 'collections.defaultdict'>
@@ -73,7 +78,7 @@ def cal_tf_idf(data: dict):
     True
     >>> isinstance(val2019[0][1], float)
     True
-    >>> b = [['IS590PR', 'best', 'class', 'ever'], ['Doing', 'project', 'winterbreak', 'best']]
+    >>> b = [['IS590PR', 'best', 'class', 'ever'], ['Doing', 'project', 'winter', 'break', 'best']]
     >>> cal_tf_idf(b)
     Traceback (most recent call last):
     ValueError: input must be an dictionary
@@ -104,6 +109,30 @@ def cal_tf_idf(data: dict):
 
 
 def get_top_words(tfidf_dict: dict, n_words=10):
+    """ Get N words with highest TF-IDF score.
+
+    :param tfidf_dict: an dictionary, keys are year, values are [[term1, TF-IDF_1], [term2, TF-IDF2]...]
+    :param n_words: Number of words to retrieve. The default value is 10.
+    :return: a dataframe with three columns: year, term, and tf-idf
+
+    >>> tfidf_exmaple = defaultdict(list)
+    >>> tfidf_exmaple[2019].append(['IS590PR', 0.1013662770270411])
+    >>> tfidf_exmaple[2019].append(['best', -0.07192051811294523])
+    >>> tfidf_exmaple[2019].append(['class', 0.1013662770270411])
+    >>> tfidf_exmaple[2019].append(['ever', 0.1013662770270411])
+    >>> df1 = get_top_words(tfidf_exmaple, n_words = 2)
+    >>> df1.shape
+    (2, 3)
+    >>> df2 = get_top_words(tfidf_exmaple, n_words = 5)
+    Traceback (most recent call last):
+    ValueError: input of n_words is more than the words in data!
+    >>> tfidf_exmaple[2018].append(['cats', 0.8])
+    >>> tfidf_exmaple[2018].append(['are', 0.1])
+    >>> tfidf_exmaple[2018].append(['cute', 0.9])
+    >>> df3 = get_top_words(tfidf_exmaple, n_words = 2)
+    >>> df3.iloc[:,0].drop_duplicates().tolist()
+    [2019, 2018]
+    """
     header = ['year', 'term', 'tf-idf']
     dfs = []
     for each_year, tfidf_scores in tfidf_dict.items():
@@ -112,8 +141,11 @@ def get_top_words(tfidf_dict: dict, n_words=10):
             df_list.append([each_year, term_score[0], float(term_score[1])])
         yr_df = pd.DataFrame(df_list, columns=header)
         yr_df = yr_df.sort_values(by=['tf-idf'], ascending=False)
-        yr_df = yr_df.iloc[:n_words].reset_index(drop=True)
-        dfs.append(yr_df)
+        if n_words < len(tfidf_scores):
+            yr_df = yr_df.iloc[:n_words].reset_index(drop=True)
+            dfs.append(yr_df)
+        else:
+            raise ValueError('input of n_words is more than the words in data!')
 
     df_out = pd.concat(dfs)
 
@@ -121,6 +153,35 @@ def get_top_words(tfidf_dict: dict, n_words=10):
 
 
 def jaccard_sim(news_data_dict: dict, song_data_dict: dict):
+    """ Calculate Jaccard similarity between one year of news and songs published within the same and next 4 years.
+        For exmple, if news were published in 2001, this function calculated the similarity between the following pairs:
+        - news (published in 2001) , songs (published in 2001)
+        - news (published in 2001) , songs (published in 2002)
+        - news (published in 2001) , songs (published in 2003)
+        - news (published in 2001) , songs (published in 2004)
+        - news (published in 2001) , songs (published in 2005)
+
+    :param news_data_dict: an dictionary containing news data
+    :param song_data_dict: an dictionary containing song data
+    :return: an dictionary (defalutdict),
+             keys are the year of the news being published, while
+             values are the Jaccard similarity between news and the songs.
+    >>> news1 = defaultdict(list)
+    >>> news1[2001] = [['programming', 'healthy', 'activity'], ['cats', 'are' 'mystic']]
+    >>> songs1 = defaultdict(list)
+    >>> songs1[2001] = [['programming', 'healthy', 'activity'], ['cats', 'are' 'mystic']]
+    >>> songs1[2002] = [['programming', 'brain', 'activity'], ['cats', 'are' 'cute']]
+    >>> songs1[2003] = [['programming', 'good', 'brain'], ['cats', 'are' 'dangerous']]
+    >>> songs1[2004] = [['programming', 'hard', 'activity'], ['dogs', 'are' 'cute']]
+    >>> songs1[2005] = [['programming', 'healthy', 'thing'], ['dogs', 'are' 'loyal']]
+    >>> j_sim = jaccard_sim(news1, songs1)
+    >>> type(j_sim)
+    <class 'collections.defaultdict'>
+    >>> list(j_sim.keys())
+    [2001]
+    >>> len(j_sim[2001])
+    5
+    """
 
     jaccard_dict = defaultdict(list)
 
