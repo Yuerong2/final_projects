@@ -152,6 +152,67 @@ def get_top_words(tfidf_dict: dict, n_words=10):
     return df_out
 
 
+def find_shared_words(news_df, song_df):
+    """ Find the words with high TD-IDF scores and appear in both news and songs.
+        Count how many words appear in both news and songs
+        Also:
+        1. Write all the high TD-IDF scores in news and songs into a file, 'TFIDF_top_terms.csv"
+        2. Write the counting result into a file, 'TFIDF_found_in_both.csv'
+
+    :param news_df: a dataframe, containing the high TF-IDF words in news
+    :param song_df: a dataframe, containing the high TF-IDF words in songs
+    :return: a dataframe, containing the counting results and the words appear in both corpus.
+
+    >>> ndf_data = [['year', 'term', 'tf-idf'], [2001, 'cat', 0.1], [2001, 'dog', 0.2], [2001, 'pig', 0.3]]
+    >>> ndf = pd.DataFrame(ndf_data[1:], columns=ndf_data[0])
+    >>> sdf_data = [['year', 'term', 'tf-idf'], [2001, 'cat', 0.1], [2001, 'dog', 0.2], [2001, 'pig', 0.3]]
+    >>> sdf_data.append([[2002, 'cow', 0.1], [2002, 'bird', 0.2], [2002, 'pig', 0.3]])
+    >>> sdf_data.append([[2003, 'cat', 0.1], [2003, 'bird', 0.2], [2003, 'dog', 0.3]])
+    >>> sdf_data.append([[2004, 'baby', 0.1], [2003, 'chile', 0.2], [2003, 'men', 0.3]])
+    >>> sdf_data.append([[2005, 'cattle', 0.1], [2003, 'bird', 0.2], [2003, 'cat', 0.3]])
+    >>> sdf = pd.DataFrame(sdf_data[1:], columns=sdf_data[0])
+    >>> shared_w = find_shared_words(ndf, sdf)
+    >>> shared_w.shape
+    (5, 4)
+    >>> shared_w.iloc[0,1]
+    '2001/2001'
+    >>> shared_w.iloc[4,1]
+    '2001/2005'
+
+    """
+    all_top_df = pd.concat([news_df, song_df], axis=1)
+    all_top_df.columns = ['N_yr', 'N_term', 'N_tfidf', 'S_yr', 'S_term', 'S_tfidf']
+    all_top_out = all_top_df[['N_yr', 'N_term', 'N_tfidf', 'S_term', 'S_tfidf']].rename(columns={'N_yr': 'Year'})
+    all_top_out.set_index('Year').to_csv('TFIDF_top_terms.csv')
+
+    shared = [['Window_ID', 'NewsYR/SongYR', 'N_in_both', 'words_in_both']]
+    window_count = 0
+    yr_unique = list(news_df.iloc[:, 0].unique())
+    for year in range(len(yr_unique)):
+        news_year = 2001 + year
+        window_count += 1
+        df_1yr_news = all_top_df.loc[all_top_df.N_yr == news_year]
+        top_w_news = set(df_1yr_news.N_term.tolist())
+        for each_yr in range(15 - year):
+            song_year = news_year + each_yr
+            if song_year >= news_year and song_year - news_year < 5:
+                df_1yr_song = all_top_df.loc[all_top_df.S_yr == song_year]
+                top_w_song = set(df_1yr_song.S_term.tolist())
+                in_both = list(top_w_news.intersection(top_w_song))
+                in_both.sort()
+                n_shared = len(in_both)
+                yr_pair = str(news_year) + '/' + str(song_year)
+                if n_shared > 0:
+                    shared.append([str(window_count), yr_pair, n_shared, '|'.join(in_both)])
+                else:
+                    shared.append([str(window_count), yr_pair, 0, '-'])
+
+    shared_df = pd.DataFrame(shared[1:], columns=shared[0])
+    shared_df.set_index('Window_ID').to_csv('TFIDF_found_in_both.csv')
+
+    return shared_df
+
+
 def jaccard_sim(news_data_dict: dict, song_data_dict: dict):
     """ Calculate Jaccard similarity between one year of news and songs published within the same and the next 4 years.
         For example, if news were published in 2001, this function calculated the similarity between the pairs below:
@@ -322,52 +383,23 @@ if __name__ == "__main__":
     song_data = read_data(path2song, yr_loc=3, ti_loc=1, txt_loc=4)
     song_tfidf = cal_tf_idf(song_data)
     song_top = get_top_words(song_tfidf, n_words=n_top_words)
-
+    
     news_data = read_data(path2news, yr_loc=1, ti_loc=2, txt_loc=3)
     news_tfidf = cal_tf_idf(news_data)
     news_top = get_top_words(news_tfidf, n_words=n_top_words)
 
-    all_top_df = pd.concat([news_top, song_top], axis=1)
-    all_top_df.columns = ['N_yr', 'N_term', 'N_tfidf', 'S_yr', 'S_term', 'S_tfidf']
-    all_top_out = all_top_df[['N_yr', 'N_term', 'N_tfidf', 'S_term', 'S_tfidf']].rename(columns={'N_yr': 'Year'})
-    all_top_out.set_index('Year').to_csv('TFIDF_top_terms.csv')
-
-    shared = [['Window_ID', 'NewsYR/SongYR', 'N_in_both', 'words_in_both']]
-    window_count = 0
-    for year in range(15):
-        news_year = 2001 + year
-        window_count += 1
-        df_1yr_news = all_top_df.loc[all_top_df.N_yr == news_year]
-        top_w_news = set(df_1yr_news.N_term.tolist())
-        for each_yr in range(15-year):
-            song_year = news_year + each_yr
-            if song_year >= news_year and song_year - news_year < 5:
-                df_1yr_song = all_top_df.loc[all_top_df.S_yr == song_year]
-                top_w_song = set(df_1yr_song.S_term.tolist())
-                in_both = list(top_w_news.intersection(top_w_song))
-                in_both.sort()
-                n_shared = len(in_both)
-                yr_pair = str(news_year) + '/' + str(song_year)
-                if n_shared > 0:
-                    shared.append([str(window_count), yr_pair, n_shared, '|'.join(in_both)])
-                else:
-                    shared.append([str(window_count), yr_pair, 0, '-'])
-
+    shared_top_words = find_shared_words(news_top, song_top)
     print('Number of high TF-IDF words found in both corpus: (among', n_top_words, 'words with highest TD-IDF)')
-    for each in shared:
+    shared_top_words_list = [shared_top_words.columns.values.tolist()] + shared_top_words.values.tolist()
+    for each in shared_top_words_list:
         print('{:<9}  {:<13}  {:<9}  {:<}'.format(each[0], each[1], each[2], each[3]))
-        with open('TFIDF_found_in_both.csv', 'a') as fout:
-            fout.write(each[0]+','+each[1]+','+str(each[2])+','+each[3]+'\n')
-
-    print('Jaccard similarity:')
-    print('{:7} {:8} {:8} {:8} {:8} {:8}'.format('News_YR', 'sim2YR+0', 'sim2YR+1', 'sim2YR+2', 'sim2YR+3', 'sim2YR+4'))
     # calculate jaccard similarity between news and songs, using a five-year sliding window
+    print('Jaccard similarity:')
+    print('{:8} {:8} {:8} {:8} {:8} {:8}'.format('News_YR', 'sim2YR+0', 'sim2YR+1', 'sim2YR+2', 'sim2YR+3', 'sim2YR+4'))
     jaccard_11yr = jaccard_sim(news_data, song_data)
     for news_year, jac_vals in jaccard_11yr.items():
-        print(
-            '{:<7} {:<8} {:<8} {:<8} {:<8} {:<8}'.format(news_year,
-                                                         jac_vals[0], jac_vals[1], jac_vals[2], jac_vals[3], jac_vals[4]))
-
+        print('{:<8} {:<8} {:<8} {:<8} {:<8} {:<8}'.format(
+            news_year, jac_vals[0], jac_vals[1], jac_vals[2], jac_vals[3], jac_vals[4]))
     # make fig of Jaccard scores
     jpic = draw_pic(jaccard_11yr, cmp='Greens')
     jpic.set_xlabel(str('year progression'), fontsize=15)
@@ -375,15 +407,13 @@ if __name__ == "__main__":
     plt.title('Jaccard Similarity; 5-year sliding window', fontsize=20)
     plt.savefig('Graphs/jaccard_similarity.png', dpi=300)
     plt.show()
-
+    # calculate cosine similarity between news and songs, using a five-year sliding window
     print('Cosine similarity:')
-    print('{:7} {:8} {:8} {:8} {:8} {:8}'.format('News_YR', 'sim2YR+0', 'sim2YR+1', 'sim2YR+2', 'sim2YR+3', 'sim2YR+4'))
+    print('{:8} {:8} {:8} {:8} {:8} {:8}'.format('News_YR', 'sim2YR+0', 'sim2YR+1', 'sim2YR+2', 'sim2YR+3', 'sim2YR+4'))
     cosine_11yr = cosine_sim(news_data, song_data)
     for news_year, cos_vals in cosine_11yr.items():
-        print(
-            '{:<7} {:<8} {:<8} {:<8} {:<8} {:<8}'.format(news_year,
-                                                         cos_vals[0], cos_vals[1], cos_vals[2], cos_vals[3], cos_vals[4]))
-
+        print('{:<8} {:<8} {:<8} {:<8} {:<8} {:<8}'.format(
+            news_year,cos_vals[0], cos_vals[1], cos_vals[2], cos_vals[3], cos_vals[4]))
     # make fig of cosine scores
     cpic = draw_pic(cosine_11yr, cmp='Reds')
     cpic.set_xlabel(str('year progression'), fontsize=15)
