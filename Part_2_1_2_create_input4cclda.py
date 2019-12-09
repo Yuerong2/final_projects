@@ -36,7 +36,7 @@ def rewrite4cclda(num:str,filepath:str,column_name:str):
         raise ValueError('input of each parameter must be a string')
     else:
         pass
-    f = open('/Users/hu/Desktop/PR/final_projects/ccLDA/input.txt', 'w')
+    f = open('ccLDA/input.txt', 'w')
     df = pd.read_csv(filepath)
     note1 = df[column_name].tolist()
     content1 = str(note1)
