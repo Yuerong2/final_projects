@@ -9,6 +9,8 @@ matrix:
 install:
   - pip install -r requirements.txt
   - "python -m nltk.downloader stopwords"
+  - "python -m nltk.download('wordnet')"
+   
 
 # command to run tests
 script: pytest --doctest-modules
