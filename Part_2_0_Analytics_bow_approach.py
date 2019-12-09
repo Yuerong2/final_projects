@@ -5,7 +5,6 @@ from collections import Counter
 from nltk import WordNetLemmatizer
 from time import time
 from numpy.linalg import norm
-import multiprocessing as mp
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
@@ -27,7 +26,7 @@ def read_data(path2file: str, yr_loc: int, ti_loc: int, txt_loc: int):
     <class 'collections.defaultdict'>
     >>> len(all_songs.keys())
     15
-    >>> songs_keys = list(all_songs.keys()) # check whether all the keys are years by datatype being numbers
+    >>> songs_keys = list(all_songs.keys()) # check whether all the keys are years (if so, datatype should be int)
     >>> sum([isinstance(k, int) for k in songs_keys])
     15
     >>> yr_len = [len(str(k)) for k in songs_keys] # check whether all the keys are year (if so, length should all be 4)
@@ -72,12 +71,12 @@ def cal_tf_idf(data: dict):
     >>> a_tfidf = cal_tf_idf(a)
     >>> type(a)
     <class 'collections.defaultdict'>
-    >>> val2019 = a_tfidf[2019]
+    >>> val2019 = a_tfidf[2019]  # check datatype of values
     >>> type(val2019)
     <class 'list'>
-    >>> isinstance(val2019[0][0], str)
+    >>> isinstance(val2019[0][0], str)  # check item in sublist. First item is word so type should be str.
     True
-    >>> isinstance(val2019[0][1], float)
+    >>> isinstance(val2019[0][1], float)  # check item in sublist. Second item is tf-idf so type should be float.
     True
     >>> b = [['IS590PR', 'best', 'class', 'ever'], ['Doing', 'project', 'winter', 'break', 'best']]
     >>> cal_tf_idf(b)
@@ -122,18 +121,18 @@ def get_top_words(tfidf_dict: dict, n_words=10):
     >>> tfidf_exmaple[2019].append(['class', 0.1013662770270411])
     >>> tfidf_exmaple[2019].append(['ever', 0.1013662770270411])
     >>> df1 = get_top_words(tfidf_exmaple, n_words = 2)
-    >>> df1.shape
+    >>> df1.shape # check "n_words" works.
     (2, 3)
-    >>> df2 = get_top_words(tfidf_exmaple, n_words = 5)
+    >>> df2 = get_top_words(tfidf_exmaple, n_words = 5)  # check the if/else condition
     Traceback (most recent call last):
     ValueError: input of n_words is more than the words in data!
     >>> tfidf_exmaple[2018].append(['cats', 0.8])
     >>> tfidf_exmaple[2018].append(['are', 0.1])
     >>> tfidf_exmaple[2018].append(['cute', 0.9])
     >>> df3 = get_top_words(tfidf_exmaple, n_words = 2)
-    >>> df3.iloc[:,0].drop_duplicates().tolist()
+    >>> df3.iloc[:,0].drop_duplicates().tolist()  # check appending works
     [2019, 2018]
-    >>> cols = list(df3.columns)
+    >>> cols = list(df3.columns)  # check number of columns in dataframe returned are aligned with description.
     >>> len(cols)
     3
     """
@@ -176,11 +175,11 @@ def find_shared_words(news_df, song_df):
     >>> sdf_data.append([[2005, 'cattle', 0.1], [2003, 'bird', 0.2], [2003, 'cat', 0.3]])
     >>> sdf = pd.DataFrame(sdf_data[1:], columns=sdf_data[0])
     >>> shared_w = find_shared_words(ndf, sdf)
-    >>> shared_w.shape
+    >>> shared_w.shape  # check returned dataframe
     (5, 4)
-    >>> shared_w.iloc[0,1]
+    >>> shared_w.iloc[0,1]  # check years of news/songs paired correctly.
     '2001/2001'
-    >>> shared_w.iloc[4,1]
+    >>> shared_w.iloc[4,1]  # check years of news/songs paired correctly.
     '2001/2005'
     """
     all_top_df = pd.concat([news_df, song_df], axis=1)
@@ -242,9 +241,9 @@ def jaccard_sim(news_data_dict: dict, song_data_dict: dict):
     >>> j_sim = jaccard_sim(news1, songs1)
     >>> type(j_sim)
     <class 'collections.defaultdict'>
-    >>> list(j_sim.keys())
+    >>> list(j_sim.keys()) # check keys were returned as expected
     [2001]
-    >>> len(j_sim[2001])
+    >>> len(j_sim[2001]) # check values were returned as expected
     5
     """
     jaccard_dict = defaultdict(list)
@@ -295,9 +294,9 @@ def cosine_sim(news_data_dict: dict, song_data_dict: dict):
     >>> cos_sim = cosine_sim(news1, songs1)
     >>> type(cos_sim)
     <class 'collections.defaultdict'>
-    >>> list(cos_sim.keys())
+    >>> list(cos_sim.keys()) # check keys were returned as expected
     [2001]
-    >>> len(cos_sim[2001])
+    >>> len(cos_sim[2001]) # check values were returned as expected
     5
     """
     cosine_dict = defaultdict(list)
@@ -355,7 +354,7 @@ def draw_pic(data2draw, cmp='Greens'):
     >>> draw2 = dict()
     >>> draw2[2001] = [0.1, 0.2, 0.3, 0.4]
     >>> draw2[2002] = [0.01, 0.02, 0.03, 0.04]
-    >>> draw_pic(draw2)
+    >>> draw_pic(draw2)  # check if/else condition works
     Traceback (most recent call last):
     ValueError: The number of similarity scores should be five.
     """
