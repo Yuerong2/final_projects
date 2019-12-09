@@ -4,3 +4,4 @@ vaderSentiment
 nltk
 numpy
 matplotlib
+lxml
