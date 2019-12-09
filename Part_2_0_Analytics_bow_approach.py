@@ -133,6 +133,9 @@ def get_top_words(tfidf_dict: dict, n_words=10):
     >>> df3 = get_top_words(tfidf_exmaple, n_words = 2)
     >>> df3.iloc[:,0].drop_duplicates().tolist()
     [2019, 2018]
+    >>> cols = list(df3.columns)
+    >>> len(cols)
+    3
     """
     header = ['year', 'term', 'tf-idf']
     dfs = []
@@ -267,7 +270,7 @@ def jaccard_sim(news_data_dict: dict, song_data_dict: dict):
 
 
 def cosine_sim(news_data_dict: dict, song_data_dict: dict):
-    """ Calculate consine similarity between one year of news and songs published within the same and the next 4 years.
+    """ Calculate cosine similarity between one year of news and songs published within the same and the next 4 years.
         For example, if news were published in 2001, this function calculated the similarity between the pairs below:
         - news (published in 2001) , songs (published in 2001)
         - news (published in 2001) , songs (published in 2002)
