@@ -28,8 +28,6 @@ def rewrite4cclda(num:str,filepath:str,column_name:str):
     """ Re-structure the strings
        :param num: a numerical tag add a group of string, for instance, all songs are tagged with '1'
        :return: generate a txt file as input for ccLDA
-       >>> rewrite4cclda('0','../cleaned_data/test.csv',"Lyrics")
-       done
        >>> rewrite4cclda('hi','hi',[1,2,3])
        Traceback (most recent call last):
        ValueError: input of each parameter must be a string
@@ -38,7 +36,7 @@ def rewrite4cclda(num:str,filepath:str,column_name:str):
         raise ValueError('input of each parameter must be a string')
     else:
         pass
-    f = open('ccLDA/input.txt', 'w')
+    f = open('../ccLDA/input.txt', 'w')
     df = pd.read_csv(filepath)
     note1 = df[column_name].tolist()
     content1 = str(note1)
@@ -48,8 +46,5 @@ def rewrite4cclda(num:str,filepath:str,column_name:str):
     print('done')
     f.close()
 
-rewrite4cclda('0','cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv',"Abstract")
-rewrite4cclda('1','cleaned_data/billboard_lyrics_2001-2015.csv','Lyrics')
-
-
-
+rewrite4cclda('0','../cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv',"Abstract")
+rewrite4cclda('1','../cleaned_data/billboard_lyrics_2001-2015.csv','Lyrics')
