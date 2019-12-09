@@ -5,4 +5,4 @@ nltk
 numpy
 matplotlib
 lxml
-nltk.corpus
+stop-words
