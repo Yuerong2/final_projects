@@ -5,5 +5,4 @@ nltk
 numpy
 matplotlib
 lxml
-nltk.corpus
-nltk.downloader
+stop-words
