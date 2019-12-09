@@ -64,6 +64,7 @@ def cal_tf_idf(data: dict):
     :return: a dict, keys are years and values are lists of lists.
              In each sublist, the first item is the word, the second item is the TF-IDF score of the word.
              i.e. [[term1, TF-IDF_1], [term2, TF-IDF2]...]
+
     >>> a = defaultdict(list)
     >>> a[2019].append(['IS590PR', 'best', 'class', 'ever'])
     >>> a[2019].append(['Doing', 'project', 'winter', 'break', 'best'])
@@ -226,6 +227,7 @@ def jaccard_sim(news_data_dict: dict, song_data_dict: dict):
     :return: an dictionary (defalutdict),
              keys are the year of the news being published, while
              values are the Jaccard similarity between news and the songs in the time window.
+
     >>> news1 = defaultdict(list)
     >>> news1[2001] = [['programming', 'healthy', 'activity'], ['cats', 'are' 'mystic']]
     >>> songs1 = defaultdict(list)
@@ -340,6 +342,7 @@ def draw_pic(data2draw, cmp='Greens'):
     :param data2draw: an dictionary, keys are the years while values are the similarities
     :param cmp: colormap for drawing the graph, default as Greens
     :return: pyplot axes
+
     >>> draw = dict()
     >>> draw[2001] = [0.1, 0.2, 0.3, 0.4, 0.3]
     >>> draw[2002] = [0.01, 0.02, 0.03, 0.04, 0.03]
