@@ -178,7 +178,6 @@ def find_shared_words(news_df, song_df):
     '2001/2001'
     >>> shared_w.iloc[4,1]
     '2001/2005'
-
     """
     all_top_df = pd.concat([news_df, song_df], axis=1)
     all_top_df.columns = ['N_yr', 'N_term', 'N_tfidf', 'S_yr', 'S_term', 'S_tfidf']
@@ -383,7 +382,7 @@ if __name__ == "__main__":
     song_data = read_data(path2song, yr_loc=3, ti_loc=1, txt_loc=4)
     song_tfidf = cal_tf_idf(song_data)
     song_top = get_top_words(song_tfidf, n_words=n_top_words)
-    
+
     news_data = read_data(path2news, yr_loc=1, ti_loc=2, txt_loc=3)
     news_tfidf = cal_tf_idf(news_data)
     news_top = get_top_words(news_tfidf, n_words=n_top_words)
