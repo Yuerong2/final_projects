@@ -20,7 +20,7 @@
   - We picked the songs published between 2001-2015.
   - 5,100 songs were in the dataset; 1,500 songs were published between 2001-2015
 - News:  in progress of data wrangling   
-  Newspaper Source (Database host by Ebsco)   
+  Newspaper Source (Database hosted by Ebsco)   
   http://web.a.ebscohost.com.proxy2.library.illinois.edu/ehost/search/advanced?vid=0&sid=3c64557f-5146-433d-891a-724ed9e12b3d%40sdc-v-sessmgr01   
   (or can be accessed from UIUC library database catalog)
   - Coverage: Identifies articles in regional U.S. newspapers, international newspapers, newswires and newspaper columns, as well as TV and radio news transcripts. Provides cover-to-cover full text for over 20 national (U.S.) and international newspapers, including USA Today, The Christian Science Monitor, The Washington Post, The Times (London), The Toronto Star, etc. Also contains selected full text from more than 200 regional (U.S.) newspapers, including The Boston Globe, The Chicago Tribune, The Detroit Free Press, The Miami Herald, The New York Daily News, The San Jose Mercury News, etc. In addition, full text television & radio news transcripts are provided from CBS News, FOX News, NPR, etc.
@@ -66,7 +66,7 @@
 1.3 Find the high TD-IDF words that can be found in both news and songs. Here, we use a 5-year sliding window to handle the time delay.       
 - output >>> TFIDF_found_in_both.csv     
 
-1.4 Compare the text similarity between news and songs. 5-year sliding window is also used due to the possible time delay.      
+1.4 Compare the text similarity between news and songs. 5-year sliding window is used to spot the possible time delay.      
 1.4.1 Co-word approach: Jaccard similarity 
 
 - output >>> jaccard_similarity.png       
@@ -75,13 +75,13 @@
 - output >>> cosine_similarity.png 
 
 #### Main findings:
-1.1 Very few high TF-IDF words were found appearing in both news and songs. This implied that news and songs had different wording styles.    
+1.1 Very few high TF-IDF words were found appearing in both news and songs. This implied that the two corpus had different wording styles.    
 
 1.2 Low Jaccard and cosine similarity further supported the different wordings in songs and news.   
 
 1.3 Trends found in each sliding window:   
-- Jaccard similarity dropped along with the time progress in each time-window. This suggested that number of words shared by both news and songs decreased within the 5 year after news being published.  
-- Cosine similarity remained steady in each time-window, suggesting that the two corpus shared some similarity in term of popular (high frequency) terms.
+- Jaccard similarity dropped along with the time progress in each time-window. This suggested that number of words shared by both news and songs decreased in the 5 years after news being published.  
+- Cosine similarity remained steady in each time-window, suggesting that the two corpus shared some similar patterns in term of popular (high frequency) terms.
 
 1.4 Trends found between 2001-2015:  
 - Both Jaccard and cosine similarity were higher in the news and songs being published more recently, as shown in the dark green and red lines in the graphs.
