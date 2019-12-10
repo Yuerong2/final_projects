@@ -15,5 +15,5 @@ install:
 
 # command to run tests
 before_script:
-  wget -sS http://mallet.cs.umass.edu/dist/mallet-2.0.8.zip -O file.zip; unzip file.zip; rm file.zip
+  wget http://mallet.cs.umass.edu/dist/mallet-2.0.8.zip -O file.zip; unzip file.zip; rm file.zip
 script: pytest --doctest-modules
