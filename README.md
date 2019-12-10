@@ -40,7 +40,7 @@
 1.1 Collect and align datasets    
 1.2 Remove punctuations and stopwords  
 1.3 Check NA/missing values    
-1.4 Sample the news data to form the news data subset in which number of news per year is equal to number of songs per year.    
+1.4 Sample news data to form a news data subset in which number of news is equal to number of songs in each year.    
 
 (?)1.3 Build up alternative pairs of datasets with a time delay (for instance, news dataset from 2000 to 2005 and lyrics dataset from 2001 to 2006)
 
