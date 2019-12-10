@@ -45,7 +45,7 @@
 (?)1.3 Build up alternative pairs of datasets with a time delay (for instance, news dataset from 2000 to 2005 and lyrics dataset from 2001 to 2006)
 
 ### Part 2: Text analysis 
-### Part 2-1: Bag of Word Approach
+### Part 2-0: Bag of Word Approach
 #### Script: Part_2_0_Analytics_bow_approach.py
       4 output files:
         1. TFIDF_top_terms.csv:
@@ -81,12 +81,14 @@
 
 1.3 Trends found in each sliding window:   
 - Jaccard similarity dropped along with the time progress in each time-window. This suggested that number of words shared by both news and songs decreased in the 5 years after news being published.  
+  ![Image of Jaccard similarity](./Graphs/jaccard_similarity.png)
 - Cosine similarity remained steady in each time-window, suggesting that the two corpus shared some similar patterns in term of popular (high frequency) terms.
+  ![Image of Jaccard similarity](./Graphs/cosine_similarity.png)
 
 1.4 Trends found between 2001-2015:  
-- Both Jaccard and cosine similarity were higher in the news and songs being published more recently, as shown in the dark green and red lines in the graphs.
+- Both Jaccard and cosine similarity were higher in the news and songs being published more recently, as shown in the dark green and dark red lines in the graphs.
 
-### Part 2-2: Topic Modeling : Model the topics in the top 100 songs and news (2000-2015) 
+### Part 2-1: Topic Modeling : Model the topics in the top 100 songs and news (2000-2015) 
 #### Scripts: 
 #### What these scripts did:
 #### Main findings:
@@ -104,7 +106,7 @@
    Here are the top 20 topics:  
    ![Image of cclda 20 topics](cclda_20_topics.png)
  
-### Part 2-3: Sentiment analysis
+### Part 2-2: Sentiment analysis
 #### Scripts: 
 #### What these scripts did:
 #### Main findings:
