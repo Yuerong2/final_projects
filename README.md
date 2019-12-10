@@ -37,12 +37,12 @@
       3. NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv
   
 #### What this script did:
-  1.1 Collect and align datasets    
-  1.2 Remove punctuations and stopwords  
-  1.3 Check NA/missing values    
-  1.4 Sample the news data to form the news data subset in which number of news per year is equal to number of songs per year.    
+1.1 Collect and align datasets    
+1.2 Remove punctuations and stopwords  
+1.3 Check NA/missing values    
+1.4 Sample the news data to form the news data subset in which number of news per year is equal to number of songs per year.    
 
-  (?)1.3 Build up alternative pairs of datasets with a time delay (for instance, news dataset from 2000 to 2005 and lyrics dataset from 2001 to 2006)
+(?)1.3 Build up alternative pairs of datasets with a time delay (for instance, news dataset from 2000 to 2005 and lyrics dataset from 2001 to 2006)
 
 ### Part 2: Text analysis 
 ### Part 2-1: Bag of Word Approach
@@ -58,23 +58,25 @@
            Cosine similarity between news and songs, using a 5-year sliding window.
        
 #### What this script did:
-  -1.1 Calculate the TF-IDF of each words in news and songs in each year to find representative words in news and songs.    
-  -1.2 Rank words by TF-IDF scores and select N (here N=100) words with the highest TF-IDF scores.      
-      - output >>> TFIDF_top_terms.csv      
-  -1.3 Find the high TD-IDF words that can be found in both news and songs. Here, we use a 5-year sliding window to handle the time delay.       
-      - output >>> TFIDF_found_in_both.csv     
-  -1.4 Compare the text similarity between news and songs. 5-year sliding window is also used due to the possible time delay.      
-  -1.4.1 Co-word approach: Jaccard similarity (output >>> jaccard_similarity.png)     
-  -1.4.2 Vector approach: cosine similarity (output >>> cosine_similarity.png)     
+1.1 Calculate the TF-IDF of each words in news and songs in each year to find representative words in news and songs.    
+1.2 Rank words by TF-IDF scores and select N (here N=100) words with the highest TF-IDF scores.      
+- output >>> TFIDF_top_terms.csv      
+1.3 Find the high TD-IDF words that can be found in both news and songs. Here, we use a 5-year sliding window to handle the time delay.       
+- output >>> TFIDF_found_in_both.csv     
+1.4 Compare the text similarity between news and songs. 5-year sliding window is also used due to the possible time delay.      
+1.4.1 Co-word approach: Jaccard similarity 
+- output >>> jaccard_similarity.png       
+1.4.2 Vector approach: cosine similarity
+- output >>> cosine_similarity.png 
 
 #### Main findings:
-   -1.1 Very few high TF-IDF words were found appearing in both news and songs. This implied that news and songs had different wording styles.    
-   -1.2 Low Jaccard and cosine similarity further supported the different wordings in songs and news.   
-   -1.3 Trends found in each sliding window:   
-   -1.3.1 Jaccard similarity dropped along with the time progress in each time-window. This suggested that the number of words shared by both news and songs decreased within the 5 year after news being published.  
-   -1.3.2 Cosine similarity remained steady in each time-window, suggesting that the two corpus shared some steady patterns of high frequency terms.  
-   -1.4 Trends found between 2001-2015:  
-   -1.4.1 Both Jaccard and cosine similarity were higher in the news and songs being published more recently, as shown in the dark green and red lines in the graphs.
+1.1 Very few high TF-IDF words were found appearing in both news and songs. This implied that news and songs had different wording styles.    
+1.2 Low Jaccard and cosine similarity further supported the different wordings in songs and news.   
+1.3 Trends found in each sliding window:   
+1.3.1 Jaccard similarity dropped along with the time progress in each time-window. This suggested that the number of words shared by both news and songs decreased within the 5 year after news being published.  
+1.3.2 Cosine similarity remained steady in each time-window, suggesting that the two corpus shared some steady patterns of high frequency terms.  
+1.4 Trends found between 2001-2015:  
+1.4.1 Both Jaccard and cosine similarity were higher in the news and songs being published more recently, as shown in the dark green and red lines in the graphs.
 
 ### Part 2-2: Topic Modeling : Model the topics in the top 100 songs and news (2000-2015) 
 #### Scripts: 
