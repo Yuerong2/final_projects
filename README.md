@@ -87,21 +87,28 @@
 - Both Jaccard and cosine similarity were higher in the news and songs being published more recently, as shown in the dark green and red lines in the graphs.
 
 ### Part 2-2: Topic Modeling : Model the topics in the top 100 songs and news (2000-2015) 
-#### Scripts: 
+### 2.1.1 Latent Dirichlet Allocation topic modeling
+#### Scripts: Part_2_1_1_LDA_lyrics.py
+#### Reference: https://towardsdatascience.com/evaluate-topic-model-in-python-latent-dirichlet-allocation-lda-7d57484bb5d0
 #### What these scripts did:
+- Extract 10 topics embedded in the lyrics and news 
+- Identify the dominant topic (out of the ten topics) for each piece of news/lyrics
 #### Main findings:
+- Please see dominant_topic_combined_10_topics.csv
+- Some topics are much popular than the others. For example, topic 9:
+- '0.131*"girl" + 0.076*"give" + 0.044*"man" + 0.031*"bad" + 0.025*"walk" + '
+  '0.024*"talk" + 0.022*"call" + 0.022*"real" + 0.019*"friend" + 0.018*"play"')]
 
- 2.1.1 Latent Dirichlet Allocation topic modeling
- - Scripts:Part_2_1_1_LDA_lyrics.ipynb & Part_2_1_1_LDA_news.ipynb
- - Output: dominant_topics_lyrics.csv & dominant_topics_news.csv
- 
- 
- 2.1.2 Cross-collection latent Dirichlet allocation (ccLDA) topic modeling
- - Scripts
-   Part_2_1_2_create_input4cclda.py
- - Output:
-   ccLDA_output_topwords.txt
-   Here are the top 20 topics:  
+### 2.1.2 Cross-collection latent Dirichlet allocation (ccLDA) topic modeling
+#### Scripts: Part_2_1_2_create_input4cclda.py
+#### Reference: https://cmci.colorado.edu/~mpaul/downloads/mftm.php
+#### What these scripts did:
+- This is an advanced LDA model
+- Find the 20 topics embedded in the lyrics and news 
+- Each topic is composed of 3 word lists: (1) background words shared by lyrics and news; (2) topic words in lyrics collection; (3)topic words in news collection
+#### Main findings:
+- Please see ccLDA_output_topwords.txt
+- Here are the top 20 topics:  
    ![Image of cclda 20 topics](cclda_20_topics.png)
  
 ### Part 2-3: Sentiment analysis
