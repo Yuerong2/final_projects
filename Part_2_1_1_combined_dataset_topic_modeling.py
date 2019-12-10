@@ -192,7 +192,7 @@ pprint(optimal_model.print_topics(num_words=10))
 
 # Finding the dominant topic in each doc, which is the topic number that has the highest percentage contribution in that document.
 
-def format_topics_sentences(ldamodel=lda_model, corpus=corpus, texts=data):
+def format_topics_sentences(ldamodel, corpus, texts):
     """
     :rtype: object
     """
