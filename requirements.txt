@@ -9,6 +9,5 @@ requests
 gensim
 pprint
 spacy
-en_core_web_sm
 
 
