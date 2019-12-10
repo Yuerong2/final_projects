@@ -87,6 +87,16 @@
 - Both Jaccard and cosine similarity were higher in the news and songs being published more recently, as shown in the dark green and red lines in the graphs.
 
 ### Part 2-2: Topic Modeling : Model the topics in the top 100 songs and news (2000-2015) 
+
+### 2.1.0 Preliminary tests:
+- We conducted LDA topic modeling on each collection (lyrics and news) seperately. For each collection, we got 20 topics. Please see lda_mallet_lyrics_20topics.txt and lda_mallet_news_20topics.txt for the results.
+- We learned from our testing that 10 is probably the best number of topics for topic modeling.
+- Lyrics: num of topics and coherence_values
+- ![best_num_topics_lyrics](best_num_topics_lyrics.png)
+- News: num of topics and coherence_values
+- ![best_num_topics_news](best_num_topics_news.png)
+- Therefore,in the following session 2.1.1, we used 10 as number of topics.
+
 ### 2.1.1 Latent Dirichlet Allocation topic modeling
 #### Scripts: Part_2_1_1_LDA_lyrics.py
 #### Reference: https://towardsdatascience.com/evaluate-topic-model-in-python-latent-dirichlet-allocation-lda-7d57484bb5d0
@@ -99,7 +109,7 @@
   '0.024*"talk" + 0.022*"call" + 0.022*"real" + 0.019*"friend" + 0.018*"play"')]
 
 ### 2.1.2 Cross-collection latent Dirichlet allocation (ccLDA) topic modeling
-#### Scripts: Part_2_1_2_create_input4cclda.py
+#### Scripts: Part_2_1_2_create_input4cclda.py & ccLDA/ccLDA workflow.txt (commands for using ccLDA)
 #### Reference: https://cmci.colorado.edu/~mpaul/downloads/mftm.php
 #### What these scripts did:
 - This is an advanced LDA model
@@ -111,11 +121,11 @@
    ![Image of cclda 20 topics](cclda_20_topics.png)
  
 ### Part 2-3: Sentiment analysis
-#### Scripts: Part_2_3_sentiment analysis; Part_2_3_sentiment_scores_analysis.ipynb
+#### Scripts: Part_2_3_sentiment analysis; Part_2_3_sentiment_scores_analysis.ipynb (data analysis)
 #### Reference: https://github.com/cjhutto/vaderSentiment
 #### What these scripts did:
 - Generate sentiment scores for each piece of lyrics/news
-*** The pos, neu, and neg scores are ratios for proportions of text that fall in each category (so these should all add up to be 1... or close to it with float operation). These are the most useful metrics if you want multidimensional measures of sentiment for a given sentence.
+- The pos, neu, and neg scores are ratios for proportions of text that fall in each category (so these should all add up to be 1... or close to it with float operation). These are the most useful metrics if you want multidimensional measures of sentiment for a given sentence.
  The compound score is computed by summing the valence scores of each word in the lexicon, adjusted according to the rules, and then normalized to be between -1 (most extreme negative) and +1 (most extreme positive). This is the most useful metric if you want a single unidimensional measure of sentiment for a given sentence. Calling it a 'normalized, weighted composite score' is accurate.
 #### Main findings:
 - Please see LyricsSentimentScores.csv & NewsSentimentScores.csv; /output/sentiment_scores_stats.csv
@@ -132,5 +142,5 @@
 - Compare sentiment scores of "comp"
 
  ![Image of Sentiment Scores "comp"](./output/compare_comp.png)
-** For detailed statistical data regarding the visualizations above, please see: ./output/sentiment_scores_stats.csv_
+- For detailed statistical data regarding the visualizations above, please see: ./output/sentiment_scores_stats.csv_
 - Lyrics are more "emotional" than the news, especially more positive than the news. 
