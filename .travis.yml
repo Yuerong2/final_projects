@@ -16,3 +16,6 @@ install:
 # command to run tests
 script: pytest --doctest-modules
 
+ignore:
+  - "mallet-2.0.8"
+
