@@ -32,9 +32,9 @@
 ### Part 1: Data Preprocessing  
 #### Script: Part_1_Data_preprocessing.py
     3 output data: (saved in the "cleaned_data" folder)
-    1. billboard_lyrics_2001-2015.csv
-    2. NewYorkTimes_CoverStory_2001-2015.csv
-    3. NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv
+      1. billboard_lyrics_2001-2015.csv
+      2. NewYorkTimes_CoverStory_2001-2015.csv
+      3. NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv
   
 #### What this script did:
   1.1 Collect and align datasets  
@@ -48,14 +48,14 @@
 ### Part 2-1: Bag of Word Approach
 #### Script: Part_2_0_Analytics_bow_approach.py
       4 output files:
-      1. TFIDF_top_terms.csv:
-         The 100 words per year with the highest TF-IDF scores found in news and songs.
-      2. TFIDF_found_in_both.csv
-         The words with highest TF-IDF scores found in both news and songs.
-      3. jaccard_similarity.png (saved in Graphs folder)
-         The Jaccard similarity between news and songs, using a 5-year sliding window.
-      4. cosine_similarity.png (saved in Graphs folder)
-         The cosine similarity between news and songs, using a 5-year sliding window.
+        1. TFIDF_top_terms.csv:
+           The 100 words per year with the highest TF-IDF scores found in news and songs.
+        2. TFIDF_found_in_both.csv
+           The words with highest TF-IDF scores found in both news and songs.
+        3. jaccard_similarity.png (saved in Graphs folder)
+           Jaccard similarity between news and songs, using a 5-year sliding window.
+        4. cosine_similarity.png (saved in Graphs folder)
+           Cosine similarity between news and songs, using a 5-year sliding window.
        
 #### What this script did:
   1.1 Calculate the TF-IDF of each words in news and songs in each year to find representative words in news and songs.
