@@ -81,9 +81,11 @@
 
 1.3 Trends found in each sliding window:   
 - Jaccard similarity dropped along with the time progress in each time-window. This suggested that number of words shared by both news and songs decreased in the 5 years after news being published.    
+  
   ![jac_sim](./Graphs/jaccard_similarity.png)
   
 - Cosine similarity remained steady in each time-window, suggesting that the two corpus shared some similar patterns in term of popular (high frequency) terms.
+  
   ![cos_sim](./Graphs/cosine_similarity.png)
 
 1.4 Trends found between 2001-2015:  
