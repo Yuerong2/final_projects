@@ -18,4 +18,4 @@ script: pytest --doctest-modules
 
 ignore:
   - mallet-2.0.8
-  #- Part_2_1_1_combined_dataset_topic_modeling.py
+  - Part_2_1_1_combined_dataset_topic_modeling.py
