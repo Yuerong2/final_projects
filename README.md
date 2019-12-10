@@ -31,7 +31,7 @@
 
 ### Part 1: Data Preprocessing  
 #### Script: Part_1_Data_preprocessing.py
-    3 output data: (saved in the "cleaned_data" folder)
+    3 output data: (saved in "cleaned_data" folder)
       1. billboard_lyrics_2001-2015.csv
       2. NewYorkTimes_CoverStory_2001-2015.csv
       3. NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv
