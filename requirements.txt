@@ -6,3 +6,7 @@ numpy
 matplotlib
 lxml
 requests
+gensim
+pprint
+spacy
+
