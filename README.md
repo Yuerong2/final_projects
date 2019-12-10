@@ -80,11 +80,13 @@
 1.2 Low Jaccard and cosine similarity further supported the different wordings in songs and news.   
 
 1.3 Trends found in each sliding window:   
-- Jaccard similarity dropped along with the time progress in each time-window. This suggested that number of words shared by both news and songs decreased in the 5 years after news being published.  
+- Jaccard similarity dropped along with the time progress in each time-window. This suggested that number of words shared by both news and songs decreased in the 5 years after news being published.    
+  ![jac_sim](./Graphs/jaccard_similarity.png)
 - Cosine similarity remained steady in each time-window, suggesting that the two corpus shared some similar patterns in term of popular (high frequency) terms.
+  ![cos_sim](./Graphs/cosine_similarity.png)
 
 1.4 Trends found between 2001-2015:  
-- Both Jaccard and cosine similarity were higher in the news and songs being published more recently, as shown in the dark green and red lines in the graphs.
+- Both Jaccard and cosine similarity were higher in the news and songs being published more recently, as shown in the dark green and dark red lines in the graphs.
 
 ### Part 2-2: Topic Modeling : Model the topics in the top 100 songs and news (2000-2015) 
 
