@@ -423,7 +423,7 @@ if __name__ == "__main__":
     cpic.set_xlabel(str('year progression'), fontsize=15)
     cpic.set_ylabel(str('cosine similarity'), color='k', fontsize=13)
     plt.title('Cosine Similarity; 5-year sliding window', fontsize=20)
-    plt.savefig('Graphs/cosine_similarity.png', dpi=300)
+    plt.savefig('Graphs/cosine_similarity.png', bbox_inches='tight')
     plt.show()
 
     print('run time:', time()-start_time)
