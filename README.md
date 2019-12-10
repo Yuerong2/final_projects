@@ -6,10 +6,10 @@
 - Yuerong Hu(Yuerong2)
 
 ## Project Name:
-- Project Types II: The semantic agreement between fictional corpus and real-word incidents: a case study on the song lyrics and news between 2000-2015.
+- Project Types II: The semantic agreement between fictional corpus and real-word incidents: a case study on the song lyrics and news between 2001-2015.
 
 ## Hypotheses:
-- 1. Popular songs (lyrics) and news coming out during the same period of time (etc, five years from 2000 to 2005) share certain features that were shaped by the culture and theme of the society during that period.
+- 1. Popular songs (lyrics) and news coming out during the same period of time (etc, five years from 2001 to 2005) share certain features that were shaped by the culture and theme of the society during that period.
 - 2. There might be a time delay between the similar groups of topics extracted from popular songs and those of the news. Since news always comes out quickly right after the things happened, while it takes a long time to write and publish a song.
 
 ## Data
@@ -41,8 +41,6 @@
 1.2 Remove punctuations and stopwords  
 1.3 Check NA/missing values    
 1.4 Sample news data to form a news data subset in which number of news is equal to number of songs in each year.    
-
-(?)1.3 Build up alternative pairs of datasets with a time delay (for instance, news dataset from 2000 to 2005 and lyrics dataset from 2001 to 2006)
 
 ### Part 2: Text analysis 
 ### Part 2-1: Bag of Word Approach
@@ -80,23 +78,28 @@
 1.2 Low Jaccard and cosine similarity further supported the different wordings in songs and news.   
 
 1.3 Trends found in each sliding window:   
-- Jaccard similarity dropped along with the time progress in each time-window. This suggested that number of words shared by both news and songs decreased in the 5 years after news being published.    
-  ![jac_sim](./Graphs/jaccard_similarity.png)
+- Jaccard similarity dropped along with the time progress in each time-window. This suggested that number of words shared by both news and songs decreased in the 5 years after news being published.           
+   
+   ![jac_sim](./Graphs/jaccard_similarity.png)
+  
 - Cosine similarity remained steady in each time-window, suggesting that the two corpus shared some similar patterns in term of popular (high frequency) terms.
-  ![cos_sim](./Graphs/cosine_similarity.png)
+   
+   ![cos_sim](./Graphs/cosine_similarity.png)
 
 1.4 Trends found between 2001-2015:  
 - Both Jaccard and cosine similarity were higher in the news and songs being published more recently, as shown in the dark green and dark red lines in the graphs.
 
-### Part 2-2: Topic Modeling : Model the topics in the top 100 songs and news (2000-2015) 
+### Part 2-2: Topic Modeling : Model the topics in the top 100 songs and news (2001-2015) 
 
 ### 2.1.0 Preliminary tests:
 - We conducted LDA topic modeling on each collection (lyrics and news) seperately. For each collection, we got 20 topics. Please see lda_mallet_lyrics_20topics.txt and lda_mallet_news_20topics.txt for the results.
 - We learned from our testing that 10 is probably the best number of topics for topic modeling.
 - Lyrics: num of topics and coherence_values
-- ![best_num_topics_lyrics](best_num_topics_lyrics.png)
+- ![best_num_topics_lyrics](best_num_topics_lyrics.png)    
+  
 - News: num of topics and coherence_values
 - ![best_num_topics_news](best_num_topics_news.png)
+  
 - Therefore,in the following session 2.1.1, we used 10 as number of topics.
 
 ### 2.1.1 Latent Dirichlet Allocation topic modeling

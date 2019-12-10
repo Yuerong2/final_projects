@@ -361,7 +361,7 @@ def draw_pic(data2draw, cmp='Greens'):
     t = ['news_yr', 'news_yr + 1', 'news_yr + 2', 'news_yr + 3', 'news_yr + 4']
     colormap = plt.cm.get_cmap(str(cmp))
     color = [colormap(i) for i in np.linspace(0, 1, 12)]
-    fig, ax1 = plt.subplots(figsize=(12, 7))
+    fig, ax1 = plt.subplots(figsize=(9, 6))
     color_count = 0
     for ylab, sim_values in data2draw.items():
         if len(sim_values) == 5:
@@ -371,7 +371,7 @@ def draw_pic(data2draw, cmp='Greens'):
         else:
             raise ValueError('The number of similarity scores should be five.')
     ax1.tick_params(axis='y', labelcolor='k')
-    fig.tight_layout()
+    plt.tight_layout()
     plt.legend(loc='upper right', prop={'size': 15})
 
     return ax1
@@ -409,7 +409,7 @@ if __name__ == "__main__":
     jpic.set_xlabel(str('year progression'), fontsize=15)
     jpic.set_ylabel(str('Jaccard similarity'), color='k', fontsize=13)
     plt.title('Jaccard Similarity; 5-year sliding window', fontsize=20)
-    plt.savefig('Graphs/jaccard_similarity.png', dpi=300)
+    plt.savefig('Graphs/jaccard_similarity.png', bbox_inches='tight', pad_inches=0)
     plt.show()
     # calculate cosine similarity between news and songs, using a five-year sliding window
     print('Cosine similarity:')
@@ -423,7 +423,7 @@ if __name__ == "__main__":
     cpic.set_xlabel(str('year progression'), fontsize=15)
     cpic.set_ylabel(str('cosine similarity'), color='k', fontsize=13)
     plt.title('Cosine Similarity; 5-year sliding window', fontsize=20)
-    plt.savefig('Graphs/cosine_similarity.png', dpi=300)
+    plt.savefig('Graphs/cosine_similarity.png', bbox_inches='tight', pad_inches=0)
     plt.show()
 
     print('run time:', time()-start_time)
