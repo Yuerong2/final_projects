@@ -2,7 +2,7 @@
 language: python
 
 global:
-  - IGNORE_PATHS=./Part_2_1_1_combined_dataset_topic_modeling.py
+  - IGNORE_NAMES=Part_2_1_1_combined_dataset_topic_modeling.py
 
 matrix:
   include:
