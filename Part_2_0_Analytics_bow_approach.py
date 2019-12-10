@@ -361,7 +361,7 @@ def draw_pic(data2draw, cmp='Greens'):
     t = ['news_yr', 'news_yr + 1', 'news_yr + 2', 'news_yr + 3', 'news_yr + 4']
     colormap = plt.cm.get_cmap(str(cmp))
     color = [colormap(i) for i in np.linspace(0, 1, 12)]
-    fig, ax1 = plt.subplots(figsize=(12, 7))
+    fig, ax1 = plt.subplots(figsize=(10, 6))
     color_count = 0
     for ylab, sim_values in data2draw.items():
         if len(sim_values) == 5:
