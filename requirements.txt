@@ -8,6 +8,7 @@ lxml
 requests
 gensim
 pprint
-spacy
+-U spacy
 en_core_web_sm
+
 
