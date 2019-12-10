@@ -409,7 +409,7 @@ if __name__ == "__main__":
     jpic.set_xlabel(str('year progression'), fontsize=15)
     jpic.set_ylabel(str('Jaccard similarity'), color='k', fontsize=13)
     plt.title('Jaccard Similarity; 5-year sliding window', fontsize=20)
-    plt.savefig('Graphs/jaccard_similarity.png', dpi=300)
+    plt.savefig('Graphs/jaccard_similarity.png', bbox_inches='tight')
     plt.show()
     # calculate cosine similarity between news and songs, using a five-year sliding window
     print('Cosine similarity:')
