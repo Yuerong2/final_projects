@@ -22,7 +22,7 @@ import warnings
 warnings.filterwarnings("ignore",category=DeprecationWarning)
 
 # Import Dataset
-df = pd.read_csv('./cleaned_data/combined_dataset.csv',sep=',')
+df = pd.read_csv('./cleaned_data/test2.csv',sep=',')
 
 # Convert to list
 data = df.text.values.tolist()
@@ -212,4 +212,4 @@ df_dominant_topic.columns = ['Document_No', 'Dominant_Topic', 'Topic_Perc_Contri
 df_dominant_topic['Year']=df["Year"]
 df_dominant_topic['Tag']=df["tag"]
 # export as csv file
-df_dominant_topic.to_csv('dominant_topic_combined_10_topics.csv')
+df_dominant_topic.to_csv('test2_dominant_topic_combined_10_topics.csv')
