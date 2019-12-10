@@ -94,9 +94,11 @@
 - We conducted LDA topic modeling on each collection (lyrics and news) seperately. For each collection, we got 20 topics. Please see lda_mallet_lyrics_20topics.txt and lda_mallet_news_20topics.txt for the results.
 - We learned from our testing that 10 is probably the best number of topics for topic modeling.
 - Lyrics: num of topics and coherence_values
-- ![best_num_topics_lyrics](best_num_topics_lyrics.png)
+- ![best_num_topics_lyrics](best_num_topics_lyrics.png)    
+  
 - News: num of topics and coherence_values
 - ![best_num_topics_news](best_num_topics_news.png)
+  
 - Therefore,in the following session 2.1.1, we used 10 as number of topics.
 
 ### 2.1.1 Latent Dirichlet Allocation topic modeling
