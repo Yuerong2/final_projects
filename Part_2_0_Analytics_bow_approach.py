@@ -371,7 +371,7 @@ def draw_pic(data2draw, cmp='Greens'):
         else:
             raise ValueError('The number of similarity scores should be five.')
     ax1.tick_params(axis='y', labelcolor='k')
-    fig.tight_layout()
+    plt.tight_layout()
     plt.legend(loc='upper right', prop={'size': 15})
 
     return ax1
