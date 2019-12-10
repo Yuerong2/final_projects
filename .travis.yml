@@ -10,6 +10,8 @@ install:
   - pip install -r requirements.txt
   - "python -m nltk.downloader stopwords"
   - "python -m nltk.downloader wordnet"
+  - "python -m spacy download en_core_web_s"
+  - "python -m spacy download en"
    
 
 # command to run tests
