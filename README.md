@@ -12,21 +12,77 @@
 - 1. Popular songs (lyrics) and news coming out during the same period of time (etc, five years from 2000 to 2005) share certain features that were shaped by the culture and theme of the society during that period.
 - 2. There might be a time delay between the similar groups of topics extracted from popular songs and those of the news. Since news always comes out quickly right after the things happened, while it takes a long time to write and publish a song.
 
-## What we are going to do
+## Data
 
-- Comparing the topics of creative works and factual data during the same time
+- Songs:   
+  https://www.kaggle.com/rakannimer/billboard-lyrics [coverage: 1965-2015)]
+  - This dataset contains the top 100 songs per year, from 1965-2015.
+  - We picked the songs published between 2001-2015.
+  - 5,100 songs were in the dataset; 1,500 songs were published between 2001-2015
+- News:  in progress of data wrangling   
+  Newspaper Source (Database host by Ebsco)   
+  http://web.a.ebscohost.com.proxy2.library.illinois.edu/ehost/search/advanced?vid=0&sid=3c64557f-5146-433d-891a-724ed9e12b3d%40sdc-v-sessmgr01   
+  (or can be accessed from UIUC library database catalog)
+  - Coverage: Identifies articles in regional U.S. newspapers, international newspapers, newswires and newspaper columns, as well as TV and radio news transcripts. Provides cover-to-cover full text for over 20 national (U.S.) and international newspapers, including USA Today, The Christian Science Monitor, The Washington Post, The Times (London), The Toronto Star, etc. Also contains selected full text from more than 200 regional (U.S.) newspapers, including The Boston Globe, The Chicago Tribune, The Detroit Free Press, The Miami Herald, The New York Daily News, The San Jose Mercury News, etc. In addition, full text television & radio news transcripts are provided from CBS News, FOX News, NPR, etc.
+  - We searched news published in New York Times, between 2001-2015.
+  - 46,055 abstracts and titles of news were collected from database.
 
- 1. Data wrangling and preprocessing (script: Part_1_Data_preprocessing.py; output:cleaned_data(folder))
+## What we have done
 
- 1.1 Collect and align datasets
+### Part 1: Data Preprocessing  
+#### Script: Part_1_Data_preprocessing.py
+    3 output data: (saved in the "cleaned_data" folder)
+    1. billboard_lyrics_2001-2015.csv
+    2. NewYorkTimes_CoverStory_2001-2015.csv
+    3. NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv
+  
+#### What this script did:
+  1.1 Collect and align datasets  
+  1.2 Remove punctuations and stopwords
+  1.3 Check NA/missing values
+  1.4 Sample the news data to form the news data subset in which number of news per year is equal to number of songs per year. 
 
- 1.2 Slice the datasets and build up paired samples for comparison 
+  (?)1.3 Build up alternative pairs of datasets with a time delay (for instance, news dataset from 2000 to 2005 and lyrics dataset from 2001 to 2006)
 
- 1.3 Build up alternative pairs of datasets with a time delay (for instance, news dataset from 2000 to 005 and lyrics dataset  from 2001 to 2006)
+### Part 2: Text analysis 
+### Part 2-1: Bag of Word Approach
+#### Script: Part_2_0_Analytics_bow_approach.py
+      4 output files:
+      1. TFIDF_top_terms.csv:
+         The 100 words per year with the highest TF-IDF scores found in news and songs.
+      2. TFIDF_found_in_both.csv
+         The words with highest TF-IDF scores found in both news and songs.
+      3. jaccard_similarity.png (saved in Graphs folder)
+         The Jaccard similarity between news and songs, using a 5-year sliding window.
+      4. cosine_similarity.png (saved in Graphs folder)
+         The cosine similarity between news and songs, using a 5-year sliding window.
+       
+#### What this script did:
+  1.1 Calculate the TF-IDF of each words in news and songs in each year to find representative words in news and songs.
+  1.2 Rank words by TF-IDF scores and select N (here N=100) words with the highest TF-IDF scores.  
+      - output >>> TFIDF_top_terms.csv
+  1.3 Find the high TD-IDF words that can be found in both news and songs. Here, we use a 5-year sliding window to handle the time delay.  
+      - output >>> TFIDF_found_in_both.csv
+  1.4 Compare the text similarity between news and songs. 5-year sliding window is also used due to the possible time delay.  
+      - Co-word approach: Jaccard similarity
+        output >>> jaccard_similarity.png   
+      - Vector approach: cosine similarity  
+        output >>> cosine_similarity.png
 
- 2. Text analysis 
+#### Main findings:
+   1.1 Very few high TF-IDF words were found appearing in both news and songs. This implied that news and songs had different wording styles.    
+   1.2 Low Jaccard and cosine similarity further supported the different wordings in songs and news.   
+   1.3 Trends found in each sliding window:   
+   1.3.1 Jaccard similarity dropped along with the time progress in each time-window. This suggested that the number of words shared by both news and songs decreased within the 5 year after news being published.  
+   1.3.2 Cosine similarity remained steady in each time-window, suggesting that the two corpus shared some steady patterns of high frequency terms.  
+   1.4 Trends found between 2001-2015:  
+   1.4.1 Both Jaccard and cosine similarity were higher in the news and songs being published more recently, as shown in the dark green and red lines in the graphs.
 
- 2.1 Topic Modeling : Model the topics in the top 100 songs and news (2000-2015) 
+### Part 2-2: Topic Modeling : Model the topics in the top 100 songs and news (2000-2015) 
+#### Scripts: 
+#### What these scripts did:
+#### Main findings:
+
  2.1.1 Latent Dirichlet Allocation topic modeling
  - Scripts:Part_2_1_1_LDA_lyrics.ipynb & Part_2_1_1_LDA_news.ipynb
  - Output: dominant_topics_lyrics.csv & dominant_topics_news.csv
@@ -40,13 +96,10 @@
    Here are the top 20 topics:  
    ![Image of cclda 20 topics](cclda_20_topics.png)
  
-   
-
- 2.2 Word (feature) selection and  text analysis based on word features. For example, analyze the within-group and between-group cohesion/similarity of topics in songs and news
-
- Or text analytics with bag of words model
-
- 2.3 Sentiment analysis
+### Part 2-3: Sentiment analysis
+#### Scripts: 
+#### What these scripts did:
+#### Main findings:
  
  - Script: Part_2_3_sentiment analysis; Part_2_3_sentiment_scores_analysis.ipynb
  
@@ -73,26 +126,7 @@
  3. Discussion and Data Visualization
 - General Conclusion:
 - 2.3: Lyrics are more "emotional" than the news
-## Datasets used
 
-- Songs: https://www.kaggle.com/rakannimer/billboard-lyrics [coverage: 1965-2015)]
-- News:  in progress of data wrangling   
-  -- Newspaper Source (Database)
-    - http://web.a.ebscohost.com.proxy2.library.illinois.edu/ehost/search/advanced?vid=0&sid=3c64557f-5146-433d-891a-724ed9e12b3d%40sdc-v-sessmgr01 (or can be accessed from UIUC library database catalog)
-    - Coverage: Identifies articles in regional U.S. newspapers, international newspapers, newswires and newspaper columns, as well as TV and radio news transcripts. Provides cover-to-cover full text for over 20 national (U.S.) and international newspapers, including USA Today, The Christian Science Monitor, The Washington Post, The Times (London), The Toronto Star, etc. Also contains selected full text from more than 200 regional (U.S.) newspapers, including The Boston Globe, The Chicago Tribune, The Detroit Free Press, The Miami Herald, The New York Daily News, The San Jose Mercury News, etc. In addition, full text television & radio news transcripts are provided from CBS News, FOX News, NPR, etc. 
-    - Esther's Notes:
-      - This database is great! It allows user to download searched result as a XML file. 
-      - I searched for cover stories published in New York Times, between 2001-2015. (I changed the time range a bit so that we can get three equal time window:2001-2005, 2006-2010, and 2011-2015)
-      - Got 21,055 records.
-      - We can extract title, abstract and pub date from the XML file!
-  
-  -- ProQuest Historical Newspapers: The New York Times (Database)  
-    - https://search.proquest.com/hnpnewyorktimes?accountid=14553 (or can be accessed from UIUC library database catalog)
-    - time coverage: 1851 - 2015
-    - 843,476 news (document type limited to article and dates as 2000-2015)
-    - limitation: can only download 100 record each time
-    - what we can get from the downloaded data:    
-      * Title, abstract, pub date, and some other extra but might not be useful columns
       
 
 
