@@ -6,7 +6,7 @@
 - Yuerong Hu(Yuerong2)
 
 ## Project Name:
-- Project Types II: The semantic agreement between fictional corpus and real-word incidents: a case study on the song lyrics and news between 2000-2015.
+- Project Types II: The semantic agreement between fictional corpus and real-word incidents: a case study on the song lyrics and news between 2001-2015.
 
 ## Hypotheses:
 - 1. Popular songs (lyrics) and news coming out during the same period of time (etc, five years from 2000 to 2005) share certain features that were shaped by the culture and theme of the society during that period.
@@ -89,7 +89,7 @@
 1.4 Trends found between 2001-2015:  
 - Both Jaccard and cosine similarity were higher in the news and songs being published more recently, as shown in the dark green and dark red lines in the graphs.
 
-### Part 2-2: Topic Modeling : Model the topics in the top 100 songs and news (2000-2015) 
+### Part 2-2: Topic Modeling : Model the topics in the top 100 songs and news (2001-2015) 
 
 ### 2.1.0 Preliminary tests:
 - We conducted LDA topic modeling on each collection (lyrics and news) seperately. For each collection, we got 20 topics. Please see lda_mallet_lyrics_20topics.txt and lda_mallet_news_20topics.txt for the results.
