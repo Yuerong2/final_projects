@@ -1,9 +1,6 @@
 # Travis CI configuration
 language: python
 
-global:
-  - IGNORE_NAMES=Part_2_1_1_combined_dataset_topic_modeling.py
-
 matrix:
   include:
     - python: 3.6
