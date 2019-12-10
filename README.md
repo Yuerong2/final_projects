@@ -95,8 +95,7 @@
 - Identify the dominant topic (out of the ten topics) for each piece of news/lyrics
 #### Main findings:
 - Please see dominant_topic_combined_10_topics.csv
-- Some topics are much popular than the others. For example, topic 9:
-- '0.131*"girl" + 0.076*"give" + 0.044*"man" + 0.031*"bad" + 0.025*"walk" + '
+- Some topics are much popular than the others. For example, topic 9: '0.131*"girl" + 0.076*"give" + 0.044*"man" + 0.031*"bad" + 0.025*"walk" + '
   '0.024*"talk" + 0.022*"call" + 0.022*"real" + 0.019*"friend" + 0.018*"play"')]
 
 ### 2.1.2 Cross-collection latent Dirichlet allocation (ccLDA) topic modeling
@@ -112,15 +111,15 @@
    ![Image of cclda 20 topics](cclda_20_topics.png)
  
 ### Part 2-3: Sentiment analysis
-#### Scripts: 
+#### Scripts: Part_2_3_sentiment analysis; Part_2_3_sentiment_scores_analysis.ipynb
+#### Reference: https://github.com/cjhutto/vaderSentiment
 #### What these scripts did:
+- Generate sentiment scores for each piece of lyrics/news
+*** The pos, neu, and neg scores are ratios for proportions of text that fall in each category (so these should all add up to be 1... or close to it with float operation). These are the most useful metrics if you want multidimensional measures of sentiment for a given sentence.
+ The compound score is computed by summing the valence scores of each word in the lexicon, adjusted according to the rules, and then normalized to be between -1 (most extreme negative) and +1 (most extreme positive). This is the most useful metric if you want a single unidimensional measure of sentiment for a given sentence. Calling it a 'normalized, weighted composite score' is accurate.
 #### Main findings:
- 
- - Script: Part_2_3_sentiment analysis; Part_2_3_sentiment_scores_analysis.ipynb
- 
- - Output: LyricsSentimentScores.csv & NewsSentimentScores.csv; ./output/sentiment_scores_stats.csv
- 
- - Overview of results:
+- Please see LyricsSentimentScores.csv & NewsSentimentScores.csv; /output/sentiment_scores_stats.csv
+- Overview of results:
 - Compare sentiment scores of "pos"
 
  ![Image of Sentiment Scores "pos"](./output/compare_pos.png)
@@ -133,17 +132,5 @@
 - Compare sentiment scores of "comp"
 
  ![Image of Sentiment Scores "comp"](./output/compare_comp.png)
-* For detailed statistical data regarding the visualizations above, please see: ./output/sentiment_scores_stats.csv_
- 
-** The pos, neu, and neg scores are ratios for proportions of text that fall in each category (so these should all add up to be 1... or close to it with float operation). These are the most useful metrics if you want multidimensional measures of sentiment for a given sentence.
- The compound score is computed by summing the valence scores of each word in the lexicon, adjusted according to the rules, and then normalized to be between -1 (most extreme negative) and +1 (most extreme positive). This is the most useful metric if you want a single unidimensional measure of sentiment for a given sentence. Calling it a 'normalized, weighted composite score' is accurate.(Reference: https://github.com/cjhutto/vaderSentiment)
-
- 3. Discussion and Data Visualization
-- General Conclusion:
-- 2.3: Lyrics are more "emotional" than the news
-
-      
-
-
-Notes to us:
-Yuerong: I have created 3 functions with doctests. I see that Esther has created 2 in Part_1_Data_preprocessing.py with doctests and 5 in Part_2_Analytics_bow_approach.py without doctests. I think we have met the "10" requirments.
+** For detailed statistical data regarding the visualizations above, please see: ./output/sentiment_scores_stats.csv_
+- Lyrics are more "emotional" than the news, especially more positive than the news. 
