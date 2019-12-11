@@ -15,5 +15,5 @@ install:
    
 
 # command to run tests
-script: pytest --doctest-modules Part_2_0_Analytics_bow_approach.py
+script: pytest --doctest-modules Part_2_0_Analytics_bow_approach.py; Part_2_1_2_create_input4cclda.py; Part_2_3_sentiment_analysis.py
 
