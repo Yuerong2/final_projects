@@ -147,5 +147,5 @@
 - Compare sentiment scores of "comp"
 
  ![Image of Sentiment Scores "comp"](./output/compare_comp.png)
-- For detailed statistical data regarding the visualizations above, please see: ./output/sentiment_scores_stats.csv_
+- For detailed statistical data regarding the visualizations above, please see: ./output/sentiment_scores_stats.csv
 - Lyrics are more "emotional" than the news, especially more positive than the news. 
