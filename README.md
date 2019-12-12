@@ -149,3 +149,12 @@
  ![Image of Sentiment Scores "comp"](./output/compare_comp.png)
 - For detailed statistical data regarding the visualizations above, please see: ./output/sentiment_scores_stats.csv
 - Lyrics are more "emotional" than the news, especially more positive than the news. 
+
+### Optimization
+
+With Numba:
+
+Numba was used to optimize the 'stopwords' function in the Part_1_Data_preprocessing.py file. See Optimization folder for screenshots of improved speed. 
+
+#### Optimization References:
+- https://numba.pydata.org/numba-doc/0.17.0/user/jit.html
