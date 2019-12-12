@@ -425,5 +425,4 @@ if __name__ == "__main__":
     plt.title('Cosine Similarity; 5-year sliding window', fontsize=20)
     plt.savefig('Graphs/cosine_similarity.png', bbox_inches='tight', pad_inches=0)
     plt.show()
-
     print('run time:', time()-start_time)
