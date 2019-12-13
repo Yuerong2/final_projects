@@ -35,7 +35,7 @@ def clean_text(text: str, remove_digits=False):
 
     return text
 
-
+@autojit
 def remove_stopwords(a_string: str, list_of_stopwords: list):
     """Remove stopwords from a string.
 
@@ -103,7 +103,7 @@ with open('/Users/swalkow2/Documents/GitHub/final_projects/raw_data/billboard_ly
 
         song_title = line[1]
         song_title = clean_text(song_title, remove_digits=True)
-        song_title = autojit(remove_stopwords(song_title, sw))
+        song_title = remove_stopwords(song_title, sw)
 
         artist = line[2]
 
@@ -135,13 +135,13 @@ for news_file in news_xml:
 
         news_title = each_news.xpath(".//tig/atl")[0].text
         news_title = clean_text(news_title, remove_digits=True)
-        news_title = autojit(remove_stopwords(news_title, sw))
+        news_title = remove_stopwords(news_title, sw)
 
         abstract = 'NONE'
         if len(each_news.xpath(".//ab")) > 0:
             abstract_text = each_news.xpath(".//ab")[0].text
             abstract = clean_text(abstract_text, remove_digits=True)
-            abstract = autojit(remove_stopwords(abstract, sw))
+            abstract = remove_stopwords(abstract, sw)
 
         pubyr = 'NONE'
         year_node = each_news.xpath(".//pubinfo/dt[@year]")
@@ -160,7 +160,7 @@ news_df = news_df.dropna(subset=['Year', 'Title', 'Abstract'])
 song_count_per_yr = song_df.groupby(['Year']).count()[['Lyrics']].reset_index()
 song_count_per_yr = song_count_per_yr.rename(columns={'Lyrics': 'N_songs'})
 song_count_per_yr_list = song_count_per_yr.values.tolist()
-#print(song_count_per_yr_list)
+print(song_count_per_yr_list)
 
 sampled_news = pd.DataFrame(columns=news_df.columns)
 for pair in song_count_per_yr_list:
