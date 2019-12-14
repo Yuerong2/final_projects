@@ -9,5 +9,6 @@ requests
 gensim
 pprint
 spacy
+numba
 
 
