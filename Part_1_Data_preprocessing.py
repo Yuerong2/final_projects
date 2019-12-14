@@ -94,7 +94,7 @@ print(sw)
 
 # Process song data, and store data into a dataframe (song_df).
 song_data = []
-with open('/Users/swalkow2/Documents/GitHub/final_projects/raw_data/billboard_lyrics_1964-2015.csv', 'r', encoding='cp1252') as song_in:
+with open('raw_data/billboard_lyrics_1964-2015.csv', 'r', encoding='cp1252') as song_in:
     song_file = csv.reader(song_in)
     next(song_file)
     for line in song_file:
@@ -124,7 +124,7 @@ song_df['Year'] = song_df['Year'].astype(str)
 
 
 # Process news data, and store news data into a dataframe (news_df).
-news_xml = ['/Users/swalkow2/Documents/GitHub/final_projects/raw_data/NewYorkTimes_CoverStory_2001-2008_2013_2015.xml', '/Users/swalkow2/Documents/GitHub/final_projects/raw_data/NewYorkTimes_CoverStory_2009-2012.xml']
+news_xml = ['raw_data/NewYorkTimes_CoverStory_2001-2008_2013_2015.xml', 'raw_data/NewYorkTimes_CoverStory_2009-2012.xml']
 news_data = []
 for news_file in news_xml:
     tree = ET.parse(news_file)
@@ -180,8 +180,8 @@ sampled_news_count = sampled_news_count.rename(columns={'Title': 'N_news(sampled
 data_stats = song_count_per_yr.merge(sampled_news_count, how='outer').merge(unsampled_news_count, how='outer')
 print(data_stats)
 
-song_df.set_index('Rank').to_csv('/Users/swalkow2/Documents/GitHub/final_projects/cleaned_data/billboard_lyrics_2001-2015.csv')
-news_df.set_index('News_id').to_csv('/Users/swalkow2/Documents/GitHub/final_projects/cleaned_data/NewYorkTimes_CoverStory_2001-2015.csv')
-sampled_news.set_index('News_id').to_csv('/Users/swalkow2/Documents/GitHub/final_projects/cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv')
+song_df.set_index('Rank').to_csv('cleaned_data/billboard_lyrics_2001-2015.csv')
+news_df.set_index('News_id').to_csv('cleaned_data/NewYorkTimes_CoverStory_2001-2015.csv')
+sampled_news.set_index('News_id').to_csv('cleaned_data/NewYorkTimes_CoverStory_2001-2015_SAMPLED.csv')
 
 
