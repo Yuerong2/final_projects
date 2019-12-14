@@ -154,7 +154,8 @@
 
 With Numba:
 
-Numba was used to optimize the 'stopwords' function in the Part_1_Data_preprocessing.py file. See Optimization folder for screenshots of improved speed. 
+Numba was used to optimize the 'stopwords' function in the Part_1_Data_preprocessing.py file. See Optimization folder for screenshots of improved speed. The screenshots are from the profiler module in PyCharm. 
 
 #### Optimization References:
 - https://numba.pydata.org/numba-doc/0.17.0/user/jit.html
+- https://numba.pydata.org/numba-doc/latest/reference/deprecation.html
